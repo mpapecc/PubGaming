@@ -1,0 +1,3 @@
+<div *ngIf="toastMessageService.toastMessage" class="toast-message-container">
+    {{toastMessageService.toastMessage}} <span class="toast-close" (click)="toastMessageService.closeToast()">x</span>
+</div>

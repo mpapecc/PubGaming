@@ -1,0 +1,13 @@
+<div class="join-game-form">
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+
+        <input class="form-control" placeholder="Ime"  aria-label="With textarea" formControlName="name">
+      
+        <input class="form-control" placeholder="Kod"  aria-label="With textarea" formControlName="roomId">
+    
+        <div class="form-actions">
+          <button class="btn btn-primary" [disabled]="!profileForm.valid">Uđi</button>
+        </div>
+      
+    </form>
+</div>

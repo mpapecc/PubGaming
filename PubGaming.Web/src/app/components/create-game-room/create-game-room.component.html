@@ -1,0 +1,28 @@
+<div *ngIf="isRoomCreated">
+    Room {{name}} is created. Room Id is {{roomId}}. Players can use this Id to connect to room.
+
+    <ul>
+        <li *ngFor="let player of playersInRoom">
+            {{player}}
+        </li>
+    </ul>
+
+    <app-quizzes-library *ngIf="!selectedQuiz" #quizzes></app-quizzes-library>
+
+    <div *ngIf="selectedQuiz">
+        {{selectedQuiz.name}}
+        <button class="btn btn-primary" (click)="startGame()">Pokreni</button>
+    </div>
+
+    
+</div>
+
+
+
+<app-dialog *ngIf="!isRoomCreated">
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Ime sobe</label>
+          <input type="email" class="form-control" [(ngModel)]="name">
+        </div>
+        <button (click)="createGameRoom()" class="btn btn-primary">Stvori sobu</button>
+</app-dialog>

@@ -1,0 +1,6 @@
+@PubGaming.Api_HostAddress = http://localhost:5042
+
+GET {{PubGaming.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

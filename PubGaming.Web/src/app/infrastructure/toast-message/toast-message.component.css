@@ -1,0 +1,10 @@
+.toast-message-container{
+    border: 1px solid #1962FF;
+    padding: 4px 8px;
+    background-color: #D1E4FF;
+    border-radius: 4px;
+
+    .toast-close{
+        cursor: pointer;
+    }
+}

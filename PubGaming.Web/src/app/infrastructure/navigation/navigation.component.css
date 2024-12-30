@@ -1,0 +1,25 @@
+.navigation-container{
+    height: 56px;
+    background-color: #1962FF;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 8px;
+
+    .nav-item{
+        box-sizing: border-box;
+        color: white;
+        text-decoration: none;
+        margin: 0 8px;
+        padding: 0 8px;
+
+        &.active{
+            outline: 1px solid white;
+            border-radius: 4px;
+        }
+
+        &:hover:not(.active){
+            border-bottom: 1px solid white;
+        }
+    }
+}
