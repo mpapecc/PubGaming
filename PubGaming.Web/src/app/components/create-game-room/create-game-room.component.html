@@ -14,15 +14,23 @@
         <button class="btn btn-primary" (click)="startGame()">Pokreni</button>
     </div>
 
-    
+
 </div>
 
+<div *ngIf="!isRoomCreated">
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Ime sobe</label>
+        <input type="email" class="form-control" [(ngModel)]="name">
+    </div>
+    <button (click)="createGameRoom()" class="btn btn-primary">Stvori sobu</button>
+</div>
 
+<app-loader [isVisible]=isLoading ></app-loader>
 
-<app-dialog *ngIf="!isRoomCreated">
-        <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">Ime sobe</label>
-          <input type="email" class="form-control" [(ngModel)]="name">
-        </div>
-        <button (click)="createGameRoom()" class="btn btn-primary">Stvori sobu</button>
-</app-dialog>
+<!-- <app-dialog *ngIf="!isRoomCreated">
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Ime sobe</label>
+        <input type="email" class="form-control" [(ngModel)]="name">
+    </div>
+    <button (click)="createGameRoom()" class="btn btn-primary">Stvori sobu</button>
+</app-dialog> -->

@@ -11,6 +11,7 @@ namespace PubGaming.Domain.Mappers
             {
                 Id = set.Id,
                 Name = set.Name,
+                Description = set.Description,
                 Questions = set.Questions?.Select(x => x.ToQuestionDto()).ToList()
             };
         }

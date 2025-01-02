@@ -1,10 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { skip } from 'rxjs';
-import { QuestionFormComponent } from 'src/app/forms/question-form/question-form.component';
 import { SetFormComponent } from 'src/app/forms/set-form/set-form.component';
-import { FlyoutService } from 'src/app/services/flyout.service';
-import { QuizSetTemplateService } from 'src/app/services/quiz-set-template.service';
+import { Flyout, FlyoutService } from 'src/app/services/flyout.service';
+import { SetTemplateService } from 'src/app/services/set-template.service';
 
 @Component({
   selector: 'app-sets-library',
@@ -19,10 +17,10 @@ export class SetsLibraryComponent implements OnInit {
   currentPage: number = 0;
   currentPageSize: number = 12;
   selectedSetId!: number;
-  isSetFormFlyoutOpen: boolean = false;
-  flyouts: any[] = [1];
+  flyout: Flyout<any> = new Flyout<any>();
+
   constructor(
-    public quizSetTemplateService: QuizSetTemplateService,
+    public quizSetTemplateService: SetTemplateService,
     public router: Router,
     public flyoutService: FlyoutService
   ) { }
@@ -32,8 +30,6 @@ export class SetsLibraryComponent implements OnInit {
       .subscribe(result => {
         this.currentViewItems = result;
       })
-    setTimeout(() => this.flyouts.push(SetFormComponent)
-    )
   }
 
   next() {
@@ -50,12 +46,6 @@ export class SetsLibraryComponent implements OnInit {
       .subscribe(result => {
         this.currentViewItems = result;
       })
-  }
-
-  openSet = (setId: number) => {
-    // this.router.navigate(['/edit-set', setId])
-    this.selectedSetId = setId;
-    this.isSetFormFlyoutOpen = true;
   }
 
   addSetToList(setId: number) {
@@ -87,16 +77,26 @@ export class SetsLibraryComponent implements OnInit {
     this.quizSetTemplateService.getSetTemplates(12, this.currentPage)
       .subscribe(result => {
         this.currentViewItems = result;
-        this.isSetFormFlyoutOpen = false;
+        this.flyout.closeFlyout();
       })
-    return true;
   }
 
+  openSetFormFlyout(setId: number = 0) {
+    this.flyout.content = SetFormComponent;
+    this.flyout.title = setId === 0 ? "Novi set" : "Editiraj set";
+    
 
-  openSetFormFlyout(){
-    this.flyoutService.create(SetFormComponent).subscribe((setForm)=>{
-      
+    this.flyoutService.create<SetFormComponent>(this.flyout).subscribe((setForm) => {
+      setForm.id = setId;
+      this.flyout.onClose = () => {
+        setForm.onSubmit();
+      }
+      setForm.onSubmitCallback = () => {
+        if (setForm.setForm.dirty)
+          this.closeSetFormFlyout();
+        else
+          this.flyout.closeFlyout();
+      }
     })
   }
-
 }

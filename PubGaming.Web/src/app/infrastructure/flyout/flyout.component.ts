@@ -1,6 +1,6 @@
-import { AfterViewInit, Component, ComponentRef, EventEmitter, Input, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
-import { Subject } from '@microsoft/signalr';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { AfterViewInit, Component, ComponentRef, EventEmitter, Input, OnInit, Output, Type, ViewChild, ViewContainerRef } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { Flyout } from 'src/app/services/flyout.service';
 
 @Component({
   selector: 'app-flyout',
@@ -8,21 +8,28 @@ import { BehaviorSubject, Observable } from 'rxjs';
   styleUrls: ['./flyout.component.css']
 })
 export class FlyoutComponent implements OnInit, AfterViewInit {
-  @ViewChild("contentComponentDiv", {read: ViewContainerRef}) contentComponentDiv!: ViewContainerRef;
+  @ViewChild("contentComponentDiv", { read: ViewContainerRef }) contentComponentDiv!: ViewContainerRef;
 
-  @Input() isSmall: boolean = false;
   @Input() contentComponent!: any;
   @Output() backdropClickEvent: EventEmitter<any> = new EventEmitter();
-  isOpen: boolean = false;
-
-  componentObserverable:BehaviorSubject<any> = new BehaviorSubject(null);
+  protected isOpen: boolean = false;
+  flyoutData!: Flyout<any>;
+  readonly componentBehaviorSubject: BehaviorSubject<any> = new BehaviorSubject(null);
 
   constructor() { }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
-      let aaa = this.contentComponentDiv.createComponent(this.contentComponent);
-    this.componentObserverable.next(aaa.instance);
+      if (!this.flyoutData?.content)
+        return;
+      this.flyoutData.closeFlyout = () => this.destroy();
+
+      // if(this.flyoutData.onClose === null){
+      //   this.flyoutData.onClose = this.backdropClick;
+      // }
+
+      let componentRef = this.contentComponentDiv.createComponent(this.flyoutData.content);
+      this.componentBehaviorSubject.next(componentRef.instance);
     })
   }
 
@@ -30,17 +37,14 @@ export class FlyoutComponent implements OnInit, AfterViewInit {
     setTimeout(() => this.isOpen = true);
   }
 
-
-
   protected backdropClick() {
     this.isOpen = false;
     setTimeout(() => {
       this.backdropClickEvent.emit();
-      this.onBackdropClick();
+      this.flyoutData?.onClose && this.flyoutData.onClose();
       this.destroy();
     }, 200);
   }
 
   destroy() { }
-  onBackdropClick() { }
 }

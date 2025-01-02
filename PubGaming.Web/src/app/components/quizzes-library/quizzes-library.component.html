@@ -14,7 +14,7 @@
   </div>
 </div>
 
-<div class="row row-cols-3 row-cols-md-4 g-4" style="margin: 0;">
+<div class="row row-cols-1 row-cols-md-4 g-4" style="margin: 0;">
   <div *ngFor="let quiz of quizzes" class="col">
     <div class="row g-0 shadow p-3 bg-white rounded" (click)="onQuizCardClick(quiz.id, $event)">
         <div class="col-md-2">
@@ -25,24 +25,13 @@
             <h5 class="card-title">{{quiz.name}}</h5>
             <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
             <p class="card-text">
-              <a (click)="openQuizDetails(quiz.id, $event)" style="cursor: pointer;" class="link-secondary">Broj setova : {{quiz.sets.length}}</a>
+              <a (click)="openQuizDetailsFlyout(quiz.id, $event)" style="cursor: pointer;" class="link-secondary">Broj setova : {{quiz.sets.length}}</a>
             </p>
             <p class="card-text">
-              <a (click)="openQuizDetails(quiz.id, $event)" style="cursor: pointer;" class="link-secondary">Broj pitanja : {{calculateQuizQuizestionsCount(quiz.sets)}}</a>
+              <a (click)="openQuizDetailsFlyout(quiz.id, $event)" style="cursor: pointer;" class="link-secondary">Broj pitanja : {{calculateQuizQuizestionsCount(quiz.sets)}}</a>
             </p>
           </div>
         </div>
       </div>
   </div>
 </div>
-
-<app-flyout *ngIf="isQuizDetailsOpen" (backdropClickEvent)="isQuizDetailsOpen = false">
-  <div header>
-    Quiz
-  </div>
-  <app-quiz-builder 
-    #quizDetails 
-    content
-    [id]="selectedQuizId">
-  </app-quiz-builder>
-</app-flyout>

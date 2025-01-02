@@ -11,6 +11,7 @@ namespace PubGaming.Domain.Mappers
             {
                 Id = setTemplate.Id,
                 Name = setTemplate.Name,
+                Description = setTemplate.Description,
                 Questions = setTemplate.Questions?.Select(x => x.ToQuestionTemplateDto()).ToList()
             };
         }

@@ -13,6 +13,7 @@ export class FormControlMappersService {
       id: this.fb.control(game.id),
       gameType: this.fb.control(game.gameType),
       name: this.fb.control(game.name),
+      description: this.fb.control(game.description),
       sets:this.fb.array(game.sets?.map((set:any) => {
         set.gameId = game.id;
         return this.mapSetToFbGroup(set);
@@ -24,6 +25,7 @@ export class FormControlMappersService {
     return this.fb.group({
       id: this.fb.control(set.id),
       name: this.fb.control(set.name),
+      description: this.fb.control(set.description),
       gameId: this.fb.control(set.gameId),
       questions:this.fb.array(set.questions?.map((question:any) => {
         question.setId = set.id;

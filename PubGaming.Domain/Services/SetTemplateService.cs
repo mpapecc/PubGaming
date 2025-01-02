@@ -17,6 +17,7 @@ namespace PubGaming.Domain.Services
                 .Where(x => x.Id == setTemplate.Id).FirstOrDefault();
 
             persistedSet.Name = setTemplate.Name;
+            persistedSet.Description = setTemplate.Description;
 
             setTemplate.Questions?.ToList().ForEach(question =>
             {
@@ -45,6 +46,7 @@ namespace PubGaming.Domain.Services
             var newQuizSet = new SetTemplate()
             {
                 Name = setTemplate.Name,
+                Description = setTemplate.Description,
                 Questions = setTemplate.Questions.Where(x => x.Id == default).ToList(),
 
             };

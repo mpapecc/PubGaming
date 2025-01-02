@@ -55,7 +55,7 @@ namespace PubGaming.Api.Controllers
         [HttpPut, Route(nameof(UpdateGame))]
         public GameDto UpdateGame(Game quiz)
         {
-            var item = quizService.UpdateQuiz1(quiz);
+            var item = quizService.UpdateQuiz(quiz);
 
             return quiz.ToGameDto();
         }

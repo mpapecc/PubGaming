@@ -18,7 +18,7 @@ export class QuestionsLibraryComponent extends BaseWithLoaderComponent{
   currentViewItems:any[]= [];
   currentPage:number= 0;
   currentPageSize:number= 12;
-
+  
   constructor(
     private questionService:QuestionTemplateService
   ) {

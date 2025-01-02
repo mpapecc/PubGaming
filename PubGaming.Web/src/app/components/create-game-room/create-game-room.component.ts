@@ -11,28 +11,31 @@ import { GameService } from 'src/app/services/game.service';
 })
 export class CreateGameRoomComponent {
 
-  @ViewChild("quizzes") quizzesLibrary!:QuizzesLibraryComponent
+  @ViewChild("quizzes") quizzesLibrary!: QuizzesLibraryComponent
 
-  connection!:signalR.HubConnection
-  isRoomCreated:boolean = false;
-  isConnected:boolean = false;
-  name:string = "";
-  roomId:number = 0;
-  playersInRoom : string[] = [];
-  selectedQuiz:any;
+  connection!: signalR.HubConnection
+  isRoomCreated: boolean = false;
+  isConnected: boolean = false;
+  name: string = "";
+  roomId: number = 0;
+  playersInRoom: string[] = [];
+  selectedQuiz: any;
+  isLoading: boolean = false;
 
   constructor(
     public gameHubService: GameHubService,
     public quizService: GameService
-  ){}
+  ) { }
 
-  public createGameRoom(){
+  public createGameRoom() {
+    this.isLoading = true;
     this.gameHubService.connect().then((connection) => {
       this.connection = connection;
 
-      this.gameHubService.createGameRoom(this.name, (roomId:number) => {
+      this.gameHubService.createGameRoom(this.name, (roomId: number) => {
         this.roomId = roomId;
         this.isRoomCreated = true;
+        this.isLoading = false;
         setTimeout(() => {
           console.log(this.quizzesLibrary)
           this.quizzesLibrary.onQuizCardClick = (quizId) => {

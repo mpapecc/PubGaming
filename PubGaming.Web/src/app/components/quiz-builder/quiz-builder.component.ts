@@ -1,13 +1,13 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FlyoutComponent } from 'src/app/infrastructure/flyout/flyout.component';
 import { FormControlMappersService } from 'src/app/services/form-control-mappers.service';
-import { QuizSetTemplateService } from 'src/app/services/quiz-set-template.service';
+import { SetTemplateService } from 'src/app/services/set-template.service';
 import { GameService } from 'src/app/services/game.service';
-import { FlyoutService } from 'src/app/services/flyout.service';
-import { SetFormComponent } from 'src/app/forms/set-form/set-form.component';
+import { Flyout, FlyoutService, FlyoutSize } from 'src/app/services/flyout.service';
+import { QuestionsLibraryComponent } from '../questions-library/questions-library.component';
 import { QuestionFormComponent } from 'src/app/forms/question-form/question-form.component';
+import { SetsLibraryComponent } from '../sets-library/sets-library.component';
 
 @Component({
   selector: 'app-quiz-builder',
@@ -15,8 +15,6 @@ import { QuestionFormComponent } from 'src/app/forms/question-form/question-form
   styleUrls: ['./quiz-builder.component.css']
 })
 export class QuizBuilderComponent implements OnInit {
-  @ViewChild('questionFlyout') questionFlyout!: FlyoutComponent;
-
   quiz: any;
   questionAddedFromLibrary: any[] = [];
   setsAddedFromLibrary: any[] = [];
@@ -24,9 +22,9 @@ export class QuizBuilderComponent implements OnInit {
   quizId: any = "";
   isEditModeAllowed: boolean = false;
   quizPicture: any;
-  isQuestionLibraryOpen: boolean = false;
   isNewQuestionOpen: boolean = false;
   isSetLibraryOpen: boolean = false;
+  flyoutData: Flyout<any> = new Flyout<any>();
 
   @Input()
   set id(id: string) {
@@ -37,6 +35,7 @@ export class QuizBuilderComponent implements OnInit {
     gameType: this.fb.control(0),
     id: this.fb.control(''),
     name: this.fb.control(''),
+    description: this.fb.control(''),
     sets: this.fb.array([])
   });
 
@@ -58,7 +57,7 @@ export class QuizBuilderComponent implements OnInit {
 
   constructor(
     public gameService: GameService,
-    public quizSetTemplateService: QuizSetTemplateService,
+    public quizSetTemplateService: SetTemplateService,
     private fb: FormBuilder,
     private formControlMappers: FormControlMappersService,
     public router: Router,
@@ -69,45 +68,18 @@ export class QuizBuilderComponent implements OnInit {
 
     if (this.quizId) {
       this.gameService.GetGameTemplateById(this.quizId).subscribe((quiz: any) => {
-        console.log(quiz)
         this.quiz = quiz;
         this.quizForm = this.formControlMappers.mapGameToFbGroup(quiz);
       });
       return;
     }
+
     this.gameService.CreateEmptyGame().subscribe((quiz: any) => {
       this.quiz = quiz
-      this.quizForm.patchValue({
-        id: quiz.id,
-        gameType: quiz.gameType,
-        name: quiz.name
-      });
-
-      quiz.sets.forEach((s: any) => {
-        const set = this.fb.group({
-          id: this.fb.control(s.id),
-          gameId: this.fb.control(quiz.id),
-          name: this.fb.control(s.name),
-          questions: this.fb.array([])
-        })
-
-        this.sets.push(set);
-      });
+      this.quizForm = this.formControlMappers.mapGameToFbGroup(quiz);
     });
 
     this.sets.disable();
-
-    let form = this.flyoutService.create(SetFormComponent);
-    let form1 = this.flyoutService.create(QuestionFormComponent);
-    
-
-    // form.instance.contentComponent = SetFormComponent;
-    // form1.instance.contentComponent = QuestionFormComponent;    
-  }
-
-  selectedQuestionIdsChange(event: any) {
-    this.questionAddedFromLibrary = event;
-    console.log(event)
   }
 
   addNewSet() {
@@ -157,9 +129,25 @@ export class QuizBuilderComponent implements OnInit {
     }
   }
 
-  onQuestionLibraryClose() {
-    this.isQuestionLibraryOpen = false;
-    console.log(this.questionAddedFromLibrary);
+  openQuestionLibraryFlyout(setIndex: number) {
+    this.currentSetIndex = setIndex;
+
+    this.flyoutData.content = QuestionsLibraryComponent,
+    this.flyoutData.title = "Baza pitanja";
+    this.flyoutData.size = FlyoutSize.Large;
+    this.flyoutData.onClose = () => {
+      this.onQuestionLibraryClose();
+    }
+
+    this.flyoutService.create<QuestionsLibraryComponent>(this.flyoutData).subscribe(questionsLibrary => {
+      questionsLibrary.canSelect = true;
+      questionsLibrary.selectedQuestionIdsChange.asObservable().subscribe((data) => {
+        this.questionAddedFromLibrary = data
+      })
+    });
+  }
+
+  private onQuestionLibraryClose() {
     this.questionAddedFromLibrary.forEach(x => {
       x.setId = this.getQuizSetId(this.currentSetIndex);
       x.id = 0;
@@ -169,22 +157,41 @@ export class QuizBuilderComponent implements OnInit {
     this.questionAddedFromLibrary = [];
   }
 
-  openQuestionLibrary(setIndex: number) {
-    this.currentSetIndex = setIndex;
-    this.isQuestionLibraryOpen = !this.isQuestionLibraryOpen;
+  openNewQuestionFormFlyot(){
+    this.flyoutData.content = QuestionFormComponent;
+    this.flyoutData.title = "Novo pitanje";
+    this.flyoutData.size = FlyoutSize.Small;
+
+    this.flyoutService.create<QuestionFormComponent>(this.flyoutData).subscribe(questionForm =>{
+      questionForm.onSubmitEvent.asObservable().subscribe(data=>{
+        this.addQuestionToForm(data);
+      })
+    })
   }
 
-  addQuestionToForm(question: any) {
+  private addQuestionToForm(question: any) {
     question.id = 0;
     question.setId = this.getQuizSetId(this.currentSetIndex);
     let questionControl = this.formControlMappers.mapQuestionToFbGroup(question);
     this.getQuizSetQuestions(this.currentSetIndex).push(questionControl);
-    // this.questionFlyout.backdropClick();
   }
 
-  onSetsLibraryClose() {
-    this.isSetLibraryOpen = false;
-    console.log(this.setsAddedFromLibrary)
+  openSetsLibrary() {
+    this.flyoutData.content = SetsLibraryComponent;
+    this.flyoutData.title = "Baza setova";
+    this.flyoutData.size = FlyoutSize.Large;
+    this.flyoutData.onClose = () => this.onSetsLibraryClose();
+
+    this.flyoutService.create<SetsLibraryComponent>(this.flyoutData).subscribe(setsLibrary => {
+      setsLibrary.canSelect = true;
+      setsLibrary.selectedSetIdEvent.asObservable().subscribe(data => {
+        this.setsAddedFromLibrary = data;
+      })
+    })
+
+  }
+
+  private onSetsLibraryClose() {
     if (this.setsAddedFromLibrary.length === 0) {
       return;
     }
@@ -202,13 +209,4 @@ export class QuizBuilderComponent implements OnInit {
       })
 
   }
-
-  openSetsLibrary() {
-    this.isSetLibraryOpen = true;
-  }
-
-  selectSetFromLibrary(event: any) {
-    this.setsAddedFromLibrary = event;
-  }
-
 }

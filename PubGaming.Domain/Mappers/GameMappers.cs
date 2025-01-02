@@ -5,14 +5,15 @@ namespace PubGaming.Domain.Mappers
 {
     public static class GameMappers
     {
-        public static GameDto ToGameDto(this Game quiz)
+        public static GameDto ToGameDto(this Game game)
         {
             return new GameDto()
             {
-                Id = quiz.Id,
-                Name = quiz.Name,
-                GameType = quiz.GameType,
-                Sets = quiz.Sets?.Select(x => x.ToSetDto()).ToList(),
+                Id = game.Id,
+                Name = game.Name,
+                Description = game.Description,
+                GameType = game.GameType,
+                Sets = game.Sets?.Select(x => x.ToSetDto()).ToList(),
             };
         }
     }

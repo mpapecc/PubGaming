@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { LoaderService } from 'src/app/services/loader.service';
 
 @Component({
@@ -9,5 +9,7 @@ import { LoaderService } from 'src/app/services/loader.service';
 export class LoaderComponent {
 
 constructor(public loaderService: LoaderService) { }
+
+@Input() isVisible:boolean = false;
 
 }

@@ -15,9 +15,9 @@
     </div>
 </div>
 
-<div class="row row-cols-1 row-cols-md-1 g-4" style="margin: 0;">
+<div class="row row-cols-1 row-cols-md-4 g-4" style="margin: 0;">
     <div class="col" *ngFor="let item of currentViewItems" >
-        <app-set-card (click)="openSet(item.id)" class="set-card" [set]="item"></app-set-card>
+        <app-set-card (click)="openSetFormFlyout(item.id)" class="set-card" [set]="item"></app-set-card>
         <div class="d-flex justify-content-center" style="background-color: white;"> 
             <input style="position: relative; display:none" *ngIf="canSelect" type="checkbox"  class="btn-check" autocomplete="off">
             <label *ngIf="canSelect && !isSetSelected(item.id)" class="btn btn-outline-secondary w-100" (click)="addSetToList(item.id)">Dodaj u kviz</label>
@@ -25,18 +25,3 @@
         </div>
     </div>
 </div>
-
-<!-- <app-flyout 
-    *ngIf="isSetFormFlyoutOpen" 
-    (backdropClickEvent)="closeSetFormFlyout()"
-    class="small">
-    <div header>
-      Set
-    </div>
-    <app-set-form
-        content
-        [canEdit]="!this.canSelect"
-        [id]="selectedSetId">
-    </app-set-form>
-</app-flyout> -->
-

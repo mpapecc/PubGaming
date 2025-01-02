@@ -6,7 +6,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class GameService {
-  url:string = environment.apiUrl + "api/Game/";
+  protected url:string = environment.apiUrl + "api/Game/";
 
   constructor(private httpClient:HttpClient) { }
 

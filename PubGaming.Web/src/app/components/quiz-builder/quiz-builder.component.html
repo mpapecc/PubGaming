@@ -4,10 +4,10 @@
     <div style="display: flex;">
       <div style="display: flex;flex-direction:column">
         <div>
-          <label for="first-name">Quiz Name</label>
+          <!-- <label for="first-name">Quiz Name</label> -->
           <textarea class="form-control" aria-label="With textarea" formControlName="name"></textarea>
         </div>
-  
+
         <div style="display: flex;flex-direction: column-reverse;align-items: center;">
           <input type="file" class="file-upload" (change)="onFileSelected($event)">
           <img style="width: 200px;" [src]="this.quizPicture" />
@@ -25,89 +25,49 @@
           </ul>
         </div>
       </div>
-  
+
       <div style="flex-grow: 1;">
-        
-        <div formArrayName="sets" *ngIf="quiz.sets" >
-    
-          <div  [formGroupName]="setIndex" *ngFor="let quizSetTemplate of sets?.controls; let setIndex=index" >
-    
+
+        <div formArrayName="sets" *ngIf="quiz.sets">
+
+          <div [formGroupName]="setIndex" *ngFor="let quizSetTemplate of sets?.controls; let setIndex=index">
+
             <div>
               <input type="text" class="form-control" formControlName="name" aria-label="Text input with checkbox">
-              <button type='button' class="btn btn-primary" (click)="openQuestionLibrary(setIndex)">Dodaj pitanje iz baze</button>    
-              <button type='button' class="btn btn-outline-primary" (click)="isNewQuestionOpen = true">Dodaj novo pitanje</button>
-              <button type='button' class="btn btn-outline-danger" (click)="removeSet(setIndex)" >Izbrisi set</button>
+              <button type='button' class="btn btn-primary" (click)="openQuestionLibraryFlyout(setIndex)">Dodaj pitanje
+                iz baze</button>
+              <button type='button' class="btn btn-outline-primary" (click)="openNewQuestionFormFlyot()">Dodaj novo
+                pitanje</button>
+              <button type='button' class="btn btn-outline-danger" (click)="removeSet(setIndex)">Izbrisi set</button>
             </div>
 
             questions
-            <div  formGroupName="questions">
-              <div  *ngFor="let questions of getQuizSetQuestions(setIndex)?.controls; let questionIndex=index">
-    
+            <div formGroupName="questions">
+              <div *ngFor="let questions of getQuizSetQuestions(setIndex)?.controls; let questionIndex=index">
+
                 <div [formGroupName]="questionIndex">
                   <label for="first-name">Question Text</label>
                   <input type="text" class="form-control" formControlName="text" aria-label="Text input with checkbox">
-                    <div formGroupName="answers" style="display: flex;">
-                      <div *ngFor="let questions of getQuestionAnswers(setIndex, questionIndex).controls; let answerIndex=index">
-                        <div [formGroupName]="answerIndex" class="answer-form-control input-group" >
-                          <div class="input-group-text">
-                            Is Correct
-                            <input class="form-check-input mt-0" type="checkbox" formControlName="isCorrect">
-                          </div>
-                          <input  type="text" class="form-control" formControlName="text">
+                  <div formGroupName="answers" style="display: flex;">
+                    <div
+                      *ngFor="let questions of getQuestionAnswers(setIndex, questionIndex).controls; let answerIndex=index">
+                      <div [formGroupName]="answerIndex" class="answer-form-control input-group">
+                        <div class="input-group-text">
+                          Is Correct
+                          <input class="form-check-input mt-0" type="checkbox" formControlName="isCorrect">
                         </div>
+                        <input type="text" class="form-control" formControlName="text">
                       </div>
                     </div>
+                  </div>
                 </div>
-    
+
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  
-</form>
+
+  </form>
 </div>
-
-<app-flyout *ngIf="isQuestionLibraryOpen" 
-  (backdropClickEvent)="onQuestionLibraryClose()">
-  <div header>
-    Odaber template pitanje iz baze
-  </div>
-  <app-questions-library
-  [canSelect]="true"
-  (selectedQuestionIdsChange)="selectedQuestionIdsChange($event)"
-  content
-  ></app-questions-library>
-</app-flyout>
-
-<app-flyout *ngIf="isNewQuestionOpen" 
-  #questionFlyout
-  (backdropClickEvent)="isNewQuestionOpen = false"
-  [isSmall]="true">
-  <div header>
-    Novo pitanje
-  </div>
-  <app-question-form
-    content
-    (onSubmitEvent)="addQuestionToForm($event)">
-  </app-question-form>
-</app-flyout>
-
-<app-flyout *ngIf="isSetLibraryOpen" (backdropClickEvent)="onSetsLibraryClose()">
-  <div header class="flyout-header-buttons">
-    <div>
-      Baza setova
-    </div>
-    <div>
-      <button class="btn btn-primary" (click)="onSetsLibraryClose()">
-        Done
-      </button>
-    </div>
-  </div>
-  <app-sets-library
-    content
-    [canSelect]="true"
-    (selectedSetIdEvent)="selectSetFromLibrary($event)">
-  </app-sets-library>
-</app-flyout>

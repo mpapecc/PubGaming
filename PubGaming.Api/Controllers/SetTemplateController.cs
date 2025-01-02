@@ -10,7 +10,7 @@ namespace PubGaming.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class QuizSetTemplateController(
+    public class SetTemplateController(
         IRepository<SetTemplate> quizSetTemplateRepository,
         SetTemplateService quizSetTemplateService
         ) : ControllerBase
