@@ -1,0 +1,14 @@
+Room {{name}} is created. Room Id is {{_roomId}}. Players can use this Id to connect to room.
+
+<ul>
+    <li *ngFor="let player of playersInRoom">
+        {{player}}
+    </li>
+</ul>
+
+<app-quizzes-library *ngIf="!selectedQuiz" #quizzes></app-quizzes-library>
+
+<div *ngIf="selectedQuiz">
+    {{selectedQuiz.name}}
+    <button class="btn btn-primary" (click)="startGame()">Pokreni</button>
+</div>

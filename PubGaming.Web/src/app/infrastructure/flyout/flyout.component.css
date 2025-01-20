@@ -1,0 +1,60 @@
+.flyout {
+    display: flex;
+    position: fixed;
+    width: 0;
+    top: 0;
+    right: 0;
+    height: 100%;
+    overflow-y: hidden;
+    transition: width 0.2s ease;
+
+    &.isOpen {
+        width: 100%;
+    }
+
+    .backdrop {
+        flex: 1;
+        background-color: gray;
+        opacity: 0.8;
+        cursor: pointer;
+    }
+
+    .content {
+        width: 80%;
+        background-color: white;
+        height: 100%;
+
+        .header {
+            height: 5%;
+            display: flex;
+            justify-content: space-between;
+            background-color: #F7F7F7;
+
+            .title{
+                display: flex;
+                align-items: center;
+            }
+
+            .header-buttons{
+                display: flex;
+                align-items: center;
+            }
+        }
+
+        .ng-content {
+            height: 95%;
+            overflow-y: auto;
+            /* padding-top: 8px; */
+        }
+    }
+
+    &.small {
+        .content {
+            width: 40%;
+
+            @media screen and (max-width: 600px) {
+                width: 80%;
+            }
+        }
+    }
+}

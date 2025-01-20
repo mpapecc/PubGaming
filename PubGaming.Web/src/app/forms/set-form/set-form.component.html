@@ -1,0 +1,49 @@
+<div class="set-form">
+  <form [formGroup]="setForm" (ngSubmit)="onSubmit()">
+    <label>Ime seta</label>
+    <input class="form-control" aria-label="With textarea" formControlName="name">
+    <label>Kratki opis</label>
+    <textarea class="form-control" aria-label="With textarea" formControlName="description"></textarea>
+
+    <div class="btn-group" role="group" *ngIf="canEdit">
+      <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+        Dodaj pitanje
+      </button>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" (click)="openNewQuestionFlyout()">Novo pitanje</a></li>
+        <li><a class="dropdown-item" (click)="openQuestionLibraryFlyout()">Pitanje iz baze</a></li>
+      </ul>
+    </div>
+
+    <div formArrayName="questions" class="vstack gap-3">
+
+      <div [formGroupName]="questionIndex" *ngFor="let quizQuestion of questions?.controls; let questionIndex=index"
+        class="question-wrapper">
+        <label for="first-name">Question text</label>
+        <textarea type="text" class="form-control" formControlName="text"
+          aria-label="Text input with checkbox"></textarea>
+        <button type="button" class="btn btn-outline-danger" (click)="removeQuestion(questionIndex)">Izbriši</button>
+        <app-button text="Izbroši" [onClick]="removeQuestion" [onClickParams]="[questionIndex]"></app-button>
+        <div formArrayName="answers" class="question-answers-container">
+
+          <div *ngFor="let answer of getQuestionAnswers(questionIndex).controls; let i=index" class="answer-container">
+            <div [formGroupName]="i" class="answer-form-control input-group">
+              <div class="input-group-text">
+                Is Correct
+                <input class="form-check-input mt-0" type="checkbox" formControlName="isCorrect"
+                  aria-label="Checkbox for following text input">
+              </div>
+              <input type="text" class="form-control" formControlName="text" aria-label="Text input with checkbox">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+
+  <app-loader [isVisible]="isLoading"></app-loader>
+</div>

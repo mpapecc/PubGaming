@@ -1,0 +1,19 @@
+.error-message-container{
+    color: red;
+    height: 100%;
+    background-color: rgb(from #929292 r g b / 50%);;
+    display: flex;
+    flex-direction: column;
+    
+    .error-message-and-actions{
+        min-height: 150px;
+        background-color: whitesmoke;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+
+        .error-message{
+            padding: 0 20px;
+        }
+    }
+}

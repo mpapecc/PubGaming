@@ -1,0 +1,8 @@
+
+<div class="flex-center-column ">
+    <div class="single-column-form">
+        <app-input [formControl]="roomName"></app-input>
+        <app-button text="Stvori sobu" [onClick]="createGameRoom"></app-button>
+    </div>
+</div>
+<app-loader [isVisible]=isLoading></app-loader>
