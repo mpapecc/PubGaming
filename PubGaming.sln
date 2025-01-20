@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PubGaming.Api", "PubGaming.Api\PubGaming.Api.csproj", "{30C765E9-8188-4AF4-889D-BE2D737DEE2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PubGaming.Domain", "PubGaming.Domain\PubGaming.Domain.csproj", "{44CAF85F-4522-4457-8B0A-C098064166E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PubGaming.Persistance", "PubGaming.Persistance\PubGaming.Persistance.csproj", "{6EA60717-7E93-4286-A4D5-98ACF15495EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PubGaming.Application", "PubGaming.Application\PubGaming.Application.csproj", "{A892DD7C-963C-4A21-8887-93A6CDFB9F34}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PubGaming.Common", "PubGaming.Common\PubGaming.Common.csproj", "{8F7AA2AC-6CED-436B-B1DB-72EE3B9A16BA}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "PubGaming.Web", "PubGaming.Web\PubGaming.Web.esproj", "{429997FE-0A3A-42E0-9516-310BEED27BD3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{30C765E9-8188-4AF4-889D-BE2D737DEE2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30C765E9-8188-4AF4-889D-BE2D737DEE2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30C765E9-8188-4AF4-889D-BE2D737DEE2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30C765E9-8188-4AF4-889D-BE2D737DEE2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44CAF85F-4522-4457-8B0A-C098064166E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44CAF85F-4522-4457-8B0A-C098064166E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44CAF85F-4522-4457-8B0A-C098064166E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44CAF85F-4522-4457-8B0A-C098064166E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EA60717-7E93-4286-A4D5-98ACF15495EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EA60717-7E93-4286-A4D5-98ACF15495EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EA60717-7E93-4286-A4D5-98ACF15495EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EA60717-7E93-4286-A4D5-98ACF15495EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A892DD7C-963C-4A21-8887-93A6CDFB9F34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A892DD7C-963C-4A21-8887-93A6CDFB9F34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A892DD7C-963C-4A21-8887-93A6CDFB9F34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A892DD7C-963C-4A21-8887-93A6CDFB9F34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F7AA2AC-6CED-436B-B1DB-72EE3B9A16BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F7AA2AC-6CED-436B-B1DB-72EE3B9A16BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F7AA2AC-6CED-436B-B1DB-72EE3B9A16BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F7AA2AC-6CED-436B-B1DB-72EE3B9A16BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{429997FE-0A3A-42E0-9516-310BEED27BD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{429997FE-0A3A-42E0-9516-310BEED27BD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{429997FE-0A3A-42E0-9516-310BEED27BD3}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{429997FE-0A3A-42E0-9516-310BEED27BD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{429997FE-0A3A-42E0-9516-310BEED27BD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{429997FE-0A3A-42E0-9516-310BEED27BD3}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

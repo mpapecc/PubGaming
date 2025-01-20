@@ -1,0 +1,11 @@
+<app-navigation></app-navigation>
+<div class="outlet">
+    <router-outlet></router-outlet>
+    <app-loader *ngIf="loaderService.isVisible" class="loader"></app-loader>
+</div>
+<div id="flyouts-container" #flyouts>
+
+</div>
+<app-toast-message class="toast-message"></app-toast-message>
+<app-error-display *ngIf="errorDisplayService.errorMessage" class="error-display"></app-error-display>
+

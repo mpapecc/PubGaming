@@ -1,0 +1,24 @@
+<div class="flyout" [class.isOpen]="isOpen" [class.small]="flyoutData.isSmall()">
+    <div class="backdrop" (click)="backdropClick()">
+
+    </div>
+    <div class="content">
+        <div class="header">
+            <ng-content select="[header]"></ng-content>
+            <div class="title">
+                {{flyoutData.title}}
+            </div>
+             <div class="header-buttons">
+                <button class="btn btn-primary" (click)="backdropClick()" >Gotovo</button>
+                <button class="btn btn-primary" (click)="destroy()" >Poništi</button>
+             </div>
+        </div>
+        <div class="ng-content">
+            <ng-content select="[content]"></ng-content>
+            <div #contentComponentDiv></div>
+        </div>
+        <div class="footer">
+            <ng-content select="[footer]"></ng-content>
+        </div>
+    </div>
+</div>

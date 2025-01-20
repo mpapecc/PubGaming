@@ -1,0 +1,23 @@
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+
+  <label for="first-name">Question Text : </label>
+  <textarea class="form-control" aria-label="With textarea" formControlName="text"></textarea>
+
+  <div formArrayName="Answers" class="question-answers-container">
+
+    <div *ngFor="let answer of answers['controls']; let i=index" class="answer-container">
+      <div [formGroupName]="i" class="answer-form-control input-group" >
+        <div class="input-group-text">
+          Is Correct
+          <input class="form-check-input mt-0" type="checkbox" formControlName="IsCorrect"aria-label="Checkbox for following text input">
+        </div>
+        <input type="text" class="form-control" formControlName="Text" aria-label="Text input with checkbox">
+      </div>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <app-button text="Submit"></app-button>
+  </div>
+
+</form>

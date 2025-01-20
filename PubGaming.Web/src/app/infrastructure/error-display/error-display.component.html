@@ -1,0 +1,10 @@
+<div class="error-message-container">
+    <div class="error-message-and-actions">
+        <div class="error-message" id="error-message">
+            {{errorDisplayService.errorMessage}}
+        </div>
+        <div class="error-actions">
+            <button class="btn btn-danger" (click)="errorDisplayService.closeError()" >Ok</button>
+        </div>
+    </div>
+</div>

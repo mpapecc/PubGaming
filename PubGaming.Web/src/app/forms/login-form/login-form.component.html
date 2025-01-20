@@ -1,0 +1,7 @@
+<div class="flex-center-column">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="single-column-form">
+    <app-input formControlName="email" placeholder="email"></app-input>
+    <app-input formControlName="password" placeholder="password"></app-input>
+    <app-button text="Login"></app-button>
+  </form>
+</div>

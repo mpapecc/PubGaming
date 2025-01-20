@@ -1,0 +1,32 @@
+.outlet{
+    height: calc(100% - 56px);
+    overflow-y: auto;
+    /* padding: 32px; */
+}
+
+.toast-message{
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.error-display{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    width: 100%;
+    text-align: center;
+    height: 100%; 
+    z-index: 9999;
+}
+
+/* .loader{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+} */

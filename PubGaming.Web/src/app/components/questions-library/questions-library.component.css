@@ -1,0 +1,40 @@
+.questions-library{
+    height: 100%;
+    .questions{
+
+        .question-container{
+            margin-bottom: 10px;
+            .question-text{
+                border:  1px solid #1962FF;
+                padding: 8px;
+                border-radius: 4px;
+                display: flex;
+                
+                &:hover{
+                    background-color: aliceblue;
+                    cursor: pointer;
+                }
+            }
+            
+            .details{
+                display: none;
+        
+                &.expanded{
+                    display: flex;
+                    flex-wrap: wrap;
+                }
+                border: 1px solid;
+        
+                .answer{
+                    flex: 1 0 40%;
+                    text-align: center;
+                }
+            }
+        }
+    }
+
+    .pagination{
+        height: 10%;
+    }
+}
+

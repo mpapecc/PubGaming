@@ -1,0 +1,74 @@
+<div *ngIf="quiz" class="quiz-form">
+  <form [formGroup]="quizForm" (ngSubmit)="onSubmit()">
+
+    <div style="display: flex;">
+      <div style="display: flex;flex-direction:column">
+        <div>
+          <!-- <label for="first-name">Quiz Name</label> -->
+          <textarea class="form-control" aria-label="With textarea" formControlName="name"></textarea>
+        </div>
+
+        <div style="display: flex;flex-direction: column-reverse;align-items: center;">
+          <input type="file" class="file-upload" (change)="onFileSelected($event)">
+          <img style="width: 200px;" [src]="this.quizPicture" />
+        </div>
+
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            Dodaj set
+          </button>
+          <app-button text="Submit"></app-button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" (click)="addNewSet()">Novi Set</a></li>
+            <li><a class="dropdown-item" (click)="openSetsLibrary()">Set Template</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="flex-grow: 1;">
+
+        <div formArrayName="sets" *ngIf="quiz.sets">
+
+          <div [formGroupName]="setIndex" *ngFor="let quizSetTemplate of sets?.controls; let setIndex=index">
+
+            <div>
+              <!-- <input type="text" class="form-control" formControlName="name" aria-label="Text input with checkbox"> -->
+              <div style="display: flex;">
+                <app-input style="flex: 1;" formControlName="name" placeholder="Ime seta..."></app-input>
+                <app-button text="Dodaj pitanje iz baze" [onClick]="openQuestionLibraryFlyout" [onClickParams]="[setIndex]"></app-button>
+                <app-button text="Dodaj novo pitanje" [onClick]="openNewQuestionFormFlyot"></app-button>
+                <app-button text="Izbrisi set" [onClick]="removeSet" [onClickParams]="[setIndex]"></app-button>
+              </div>
+            </div>
+
+            questions
+            <div formGroupName="questions">
+              <div *ngFor="let questions of getQuizSetQuestions(setIndex)?.controls; let questionIndex=index">
+
+                <div [formGroupName]="questionIndex">
+                  <label for="first-name">Question Text</label>
+                  <input type="text" class="form-control" formControlName="text" aria-label="Text input with checkbox">
+                  <app-input></app-input>
+                  <div formGroupName="answers" style="display: flex;">
+                    <div
+                      *ngFor="let questions of getQuestionAnswers(setIndex, questionIndex).controls; let answerIndex=index">
+                      <div [formGroupName]="answerIndex" class="answer-form-control input-group">
+                        <div class="input-group-text">
+                          Is Correct
+                          <input class="form-check-input mt-0" type="checkbox" formControlName="isCorrect">
+                        </div>
+                        <app-input formControlName="text"></app-input>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </form>
+</div>

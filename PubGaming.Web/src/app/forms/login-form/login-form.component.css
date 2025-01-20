@@ -1,0 +1,12 @@
+.login-form {
+    width: 320px;
+    
+    app-input{
+        padding: 10px 0;
+        width: 100%;
+    }
+
+    app-button{
+        width: 100%;
+    }
+}

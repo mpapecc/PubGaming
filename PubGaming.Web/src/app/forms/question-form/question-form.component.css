@@ -1,0 +1,19 @@
+.question-answers-container{
+    display: flex;
+    flex-wrap: wrap;
+    
+    .answer-container{
+        flex: 1 0 40%;
+
+        .answer-form-control{
+            padding: 10px;
+
+            .form-check-input{
+                &:checked{
+                    background-color:var(--bs-success);
+                    border-color: var(--bs-success-border-subtle);
+                } 
+            }
+        }
+    }
+}

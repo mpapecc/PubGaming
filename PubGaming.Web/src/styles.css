@@ -1,0 +1,46 @@
+/* You can add global styles to this file, and also import other style files */
+
+.flex-center-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.single-column-form {
+  width: 320px;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: auto;
+}
+
+.double-column-grid {
+  width: 640px;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: auto auto;
+}
+
+.question-answers-container {
+  display: flex;
+  flex-wrap: wrap;
+
+  .answer-container {
+    flex: 1 0 40%;
+
+    .answer-form-control {
+      padding: 10px;
+
+      .form-check-input {
+        &:checked {
+          background-color: var(--bs-success);
+          border-color: var(--bs-success-border-subtle);
+        }
+
+      }
+    }
+  }
+}
+
+:root {
+  --font-family: 'Chakra Petch', sans-serif;
+}

@@ -1,0 +1,32 @@
+.navigation-container {
+    height: 56px;
+    background-color: #fff;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 8px;
+
+    @media only screen and (max-width:500px) {
+        flex-direction: column;
+        height: max-content;
+    }
+
+    .nav-item {
+        box-sizing: border-box;
+        color: #252624;
+        text-decoration: none;
+        margin: 0 8px;
+        padding: 0 8px;
+        font-weight: 500;
+
+        &.active {
+            outline: 1px solid #7c7e7a;
+            border-radius: 4px;
+            color: #7c7e7a;
+        }
+
+        &:hover:not(.active) {
+            border-bottom: 1px solid #7c7e7a;
+        }
+    }
+}
