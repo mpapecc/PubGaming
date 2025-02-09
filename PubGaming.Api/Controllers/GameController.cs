@@ -30,9 +30,9 @@ namespace PubGaming.Api.Controllers
         }
 
         [HttpGet, Route(nameof(GetGameTemplateById))]
-        public GameDto GetGameTemplateById([FromQuery][ModelBinder] EncryptedId entityId)
+        public GameDto GetGameTemplateById(int entityId)
         {
-            var quiz = quizRepository.Query().Where(q => q.Id == entityId.Id).FirstOrDefault();
+            var quiz = quizRepository.Query().Where(q => q.Id == entityId).FirstOrDefault();
             if (quiz != null)
                 return quiz.ToGameDto();
 

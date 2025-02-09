@@ -1,4 +1,3 @@
-using PubGaming.Api;
 using PubGaming.Api.Hub;
 using PubGaming.Application;
 using PubGaming.Persistance;
@@ -8,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+builder.Services.AddSignalR();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("pubgaming.dev", policy =>
