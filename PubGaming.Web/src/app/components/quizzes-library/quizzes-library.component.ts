@@ -21,7 +21,6 @@ export class QuizzesLibraryComponent implements OnInit {
 
   ngOnInit(): void {
     this.quizService.GetGamesList(this.currentPageSize, this.currentPage).subscribe(result => {
-      console.log(result);
       this.quizzes = result;
     })
   }
@@ -46,20 +45,16 @@ export class QuizzesLibraryComponent implements OnInit {
     this.openQuizDetailsFlyout(quizId, $event);
   }
 
-  next() {
+  next = () => {
     this.currentPage += 1
     this.quizService.GetGamesList(this.currentPageSize, this.currentPage)
-      .subscribe(result => {
-        this.quizzes = result;
-      })
+      .subscribe(result => this.quizzes = result);
   }
 
-  previous() {
+  previous = () => {
     this.currentPage -= 1
     this.quizService.GetGamesList(this.currentPageSize, this.currentPage)
-      .subscribe(result => {
-        this.quizzes = result;
-      })
+      .subscribe(result => this.quizzes = result);
   }
 
   isNextAvailable = () => this.currentPageSize === this.quizzes.length;

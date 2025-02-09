@@ -1,3 +1,5 @@
+using PubGaming.Api;
+using PubGaming.Api.Hub;
 using PubGaming.Application;
 using PubGaming.Persistance;
 
@@ -35,6 +37,5 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 app.UseCors("pubgaming.dev");
-app.MapControllers();
-
+app.MapHub<GameHub>("/game");
 app.Run();

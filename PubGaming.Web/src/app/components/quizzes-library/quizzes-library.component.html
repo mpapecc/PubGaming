@@ -1,37 +1,36 @@
-<div>
-  <div>
-      <label for="first-name">Ime kviza</label>
-      <input class="form-control" aria-label="With textarea" placeholder="Trazi po imenu kviza">
+<div class="quiz-library-wrapper">
+  <div class="paginator">
+    <app-input placeholder="Trazi po imenu kviza"></app-input>
+  
+    <div>
+      <app-button [onClick]="previous" [isDisabled]="isFirstPage()" text="Previous" />
+      <app-button [onClick]="next" [isDisabled]="!isNextAvailable()" text="Next" />
+    </div>
   </div>
-
-  <div>
-      <nav aria-label="Page navigation example">
-          <ul class="pagination">
-            <li  class="page-item"><button (click)="previous()" [disabled]="isFirstPage()" class="page-link" >Previous</button></li>
-            <li class="page-item"><button (click)="next()" [disabled]="!isNextAvailable()" class="page-link" >Next</button></li>
-          </ul>
-      </nav>
-  </div>
-</div>
-
-<div class="row row-cols-1 row-cols-md-4 g-4" style="margin: 0;">
-  <div *ngFor="let quiz of quizzes" class="col">
-    <div class="row g-0 shadow p-3 bg-white rounded" (click)="onQuizCardClick(quiz.id, $event)">
-        <div class="col-md-2">
-          <img style="width: 120px;" src="/assets/media/quiz-placeholder.jpg" class="img-fluid rounded-start" alt="/assets/media/quiz-placeholder.jpg">
-        </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h5 class="card-title">{{quiz.name}}</h5>
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            <p class="card-text">
-              <a (click)="openQuizDetailsFlyout(quiz.id, $event)" style="cursor: pointer;" class="link-secondary">Broj setova : {{quiz.sets.length}}</a>
-            </p>
-            <p class="card-text">
-              <a (click)="openQuizDetailsFlyout(quiz.id, $event)" style="cursor: pointer;" class="link-secondary">Broj pitanja : {{calculateQuizQuizestionsCount(quiz.sets)}}</a>
-            </p>
+  
+  <div class="double-column-grid quizz-card-grid" style="margin: 0;">
+  
+    <div *ngFor="let quiz of quizzes">
+      
+      <app-card>
+        <div (click)="onQuizCardClick(quiz.id, $event)">
+          <div >
+            <img style="width: 120px;" src="/assets/media/quiz-placeholder.jpg" class="img-fluid rounded-start" alt="/assets/media/quiz-placeholder.jpg">
+          </div>
+          <div>
+            <div class="card-body">
+              <h5 class="card-title">{{quiz.name}}</h5>
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              <p class="card-text">
+                <a (click)="openQuizDetailsFlyout(quiz.id, $event)" style="cursor: pointer;" class="link-secondary">Broj setova : {{quiz.sets.length}}</a>
+              </p>
+              <p class="card-text">
+                <a (click)="openQuizDetailsFlyout(quiz.id, $event)" style="cursor: pointer;" class="link-secondary">Broj pitanja : {{calculateQuizQuizestionsCount(quiz.sets)}}</a>
+              </p>
+            </div>
           </div>
         </div>
-      </div>
+      </app-card>
   </div>
+  
 </div>

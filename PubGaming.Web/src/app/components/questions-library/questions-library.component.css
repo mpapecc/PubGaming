@@ -1,6 +1,10 @@
 .questions-library{
     height: 100%;
+    display: flex;
+    flex-direction: column;
     .questions{
+        flex: 1;
+        overflow-y: auto;
 
         .question-container{
             margin-bottom: 10px;
@@ -34,7 +38,7 @@
     }
 
     .pagination{
-        height: 10%;
+        height: auto;
     }
 }
 

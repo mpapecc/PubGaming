@@ -1,23 +1,21 @@
-import { Component, EventEmitter, Input, OnInit, Output, Self } from '@angular/core';
-import { ControlValueAccessor, NgControl, Validators } from '@angular/forms';
+import { Component, EventEmitter, forwardRef, Input, OnInit, Output, Self } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl, Validators } from '@angular/forms';
+import { BaseInput } from '../base-input';
 
 @Component({
-  selector: 'app-input',
-  templateUrl: './input.component.html',
-  styleUrls: ['./input.component.css']
+  selector: 'app-form-input',
+  templateUrl: './form-input.component.html',
+  styleUrls: ['./form-input.component.css']
 })
-export class InputComponent implements OnInit,ControlValueAccessor {
-
-  @Output() valueChange = new EventEmitter<string>();
-  @Input() placeholder: string = '';
-  @Output() blur: EventEmitter<void> = new EventEmitter<void>();
-  disabled!: boolean;
+export class FormInputComponent extends BaseInput implements OnInit,ControlValueAccessor  {
   onChange: (value: any) => void = () => {};
   onTouched: () => void = () => {};
 
   constructor(@Self() public controlDir: NgControl) {
+    super();
     controlDir.valueAccessor = this;
   }
+  value: string = "";
 
   ngOnInit(): void {
     const control = this.controlDir.control;
@@ -28,7 +26,7 @@ export class InputComponent implements OnInit,ControlValueAccessor {
   }
 
   writeValue(value: any): void {
-    value && this.controlDir.control?.setValue(value, { emitEvent: false });
+    this.value = value;
   }
 
   registerOnChange(onChange: (value: any) => void): void {
@@ -42,5 +40,4 @@ export class InputComponent implements OnInit,ControlValueAccessor {
   setDisabledState(disabled: boolean): void {
     this.disabled = disabled;
   }
-
 }

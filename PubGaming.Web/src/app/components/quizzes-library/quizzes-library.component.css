@@ -1,0 +1,14 @@
+.quiz-library-wrapper{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    
+    .paginator{
+        height: auto;
+    }
+
+    .quizz-card-grid{
+        flex: 1;
+        overflow-y: auto;
+    }
+}

@@ -1,0 +1,31 @@
+.create-room-form-wrapper{
+    height: auto;
+}
+
+.reconnect-possibilites-options{
+    width: 100%;
+    padding-top: 20px;
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+
+    .reconnect-possibilites-title{
+        text-align: center;
+        height: auto;
+    }
+
+    .reconnect-possibilites-rooms{
+        /* height: 90%; */
+        flex: 1;
+        overflow:auto;
+        padding: 8px;
+
+        .app-card{
+            height: 200px;
+            display: block;
+            cursor: pointer;
+            
+        }
+    }
+}

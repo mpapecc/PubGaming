@@ -1,7 +1,7 @@
-<div class="flex-center-column">
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="single-column-form">
-    <app-input formControlName="email" placeholder="email"></app-input>
-    <app-input formControlName="password" placeholder="password"></app-input>
+<div class="flex-center-column" >
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="single-column-form" style="height: auto;max-width: 500px;">
+    <app-form-input formControlName="email" placeholder="email"></app-form-input>
+    <app-form-input formControlName="password" placeholder="password"></app-form-input>
     <app-button text="Login"></app-button>
   </form>
 </div>

@@ -1,7 +1,7 @@
 <div class="flex-center-column">
-  <form class="single-column-form" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-    <app-input formControlName="name" placeholder="Nadimak"></app-input>
-    <app-input formControlName="roomId" placeholder="ID Sobe"></app-input>
+  <form class="single-column-form join-game-form" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+    <app-form-input formControlName="name" placeholder="Nadimak"></app-form-input>
+    <app-form-input formControlName="roomId" placeholder="ID Sobe"></app-form-input>
     <app-button text="Uđi"></app-button>
   </form>
 </div>

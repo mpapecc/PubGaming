@@ -19,16 +19,17 @@ import { SetCardComponent } from './components/sets-library/set-card/set-card.co
 import { SetFormComponent } from './forms/set-form/set-form.component';
 import { FlyoutComponent } from './infrastructure/flyout/flyout.component';
 import { QuizzesLibraryComponent } from './components/quizzes-library/quizzes-library.component';
-import { CreateGameRoomComponent } from './components/create-game-room/create-game-room.component';
 import { DialogComponent } from './infrastructure/dialog/dialog.component';
 import { PlayerComponent } from './components/player/player.component';
 import { HostComponent } from './components/host/host.component';
 import { LoginFormComponent } from './forms/login-form/login-form.component';
 import { AuthInterceptor } from './infrastructure/interceptors/auth.interceptor';
 import { ButtonComponent } from './ui/button/button.component';
-import { InputComponent } from './ui/input/input.component';
+import { InputComponent } from './ui/inputs/input/input.component';
+import { FormInputComponent } from './ui/inputs/form-input/form-input.component';
+import { CardComponent } from './ui/card/card.component';
 
-const routes: Routes =[
+const routes: Routes = [
   { path: 'add-question', component: QuestionFormComponent },
   { path: 'questions-library', component: QuestionsLibraryComponent },
   { path: 'sets-library', component: SetsLibraryComponent },
@@ -37,9 +38,10 @@ const routes: Routes =[
   { path: 'quiz-builder', component: QuizBuilderComponent },
   { path: 'quiz-builder/:id', component: QuizBuilderComponent },
   { path: 'quizzes-library', component: QuizzesLibraryComponent },
-  { path: 'create-game-room', component: CreateGameRoomComponent },
+  // { path: 'create-game-room', component: CreateGameRoomComponent },
   { path: 'login', component: LoginFormComponent },
   { path: 'host/:roomId', component: HostComponent },
+  { path: 'host', component: HostComponent },
   { path: '', component: JoinGameFormComponent }
 ];
 
@@ -59,13 +61,14 @@ const routes: Routes =[
     SetFormComponent,
     FlyoutComponent,
     QuizzesLibraryComponent,
-    CreateGameRoomComponent,
     DialogComponent,
     PlayerComponent,
     HostComponent,
     LoginFormComponent,
     ButtonComponent,
-    InputComponent
+    InputComponent,
+    FormInputComponent,
+    CardComponent
   ],
   imports: [
     BrowserModule,
@@ -78,9 +81,9 @@ const routes: Routes =[
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorDisplayInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    provideRouter(routes,withComponentInputBinding())
+    provideRouter(routes, withComponentInputBinding())
   ],
   bootstrap: [AppComponent],
-  exports:[]
+  exports: []
 })
 export class AppModule { }

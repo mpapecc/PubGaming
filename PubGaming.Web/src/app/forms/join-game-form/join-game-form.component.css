@@ -1,8 +1,8 @@
 .join-game-form {
-    width: 320px;
+    height: auto;
+    max-width: 500px;
 
-    app-input{
-        padding: 10px 0;
+    app-form-input{
         width: 100%;
     }
 

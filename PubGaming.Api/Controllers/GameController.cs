@@ -30,13 +30,13 @@ namespace PubGaming.Api.Controllers
         }
 
         [HttpGet, Route(nameof(GetGameTemplateById))]
-        public GameDto GetGameTemplateById(int id)
+        public GameDto GetGameTemplateById([FromQuery][ModelBinder] EncryptedId entityId)
         {
-            var quiz = quizRepository.Query().Where(q => q.Id == id).FirstOrDefault();
+            var quiz = quizRepository.Query().Where(q => q.Id == entityId.Id).FirstOrDefault();
             if (quiz != null)
                 return quiz.ToGameDto();
 
-            throw new ArgumentException($"Quiz with id {id} does not exists");
+            throw new ArgumentException($"Quiz with id {entityId} does not exists");
         }
 
         [HttpPost, Route(nameof(CreateGameTemplate))]

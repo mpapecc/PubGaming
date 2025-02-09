@@ -8,8 +8,9 @@ namespace PubGaming.Api.Hub
     public class GameHub(IRepository<Game> gameRepository) : Hub<IGameHubClient>
     {
         private static int _roomId = 1;
+        private static int _hostId = 1;
         //private static Dictionary<string, GameRoom> gameRooms = [];
-        private static Dictionary<string, Dictionary<int, GameRoom>> hosts = [];
+        public static Dictionary<string, Dictionary<int, GameRoom>> hosts = [];
         private readonly IRepository<Game> gameRepository = gameRepository;
 
         public override Task OnConnectedAsync()
@@ -18,23 +19,31 @@ namespace PubGaming.Api.Hub
             return base.OnConnectedAsync();
         }
 
-        public void TryReconnectHost(string connectionId, int roomId)
+        public void ReconnectHostWithNewConnectionId(string oldConnectionId)
         {
-            if(!hosts.TryGetValue(connectionId, out var rooms) || !rooms.TryGetValue(roomId, out var gameRoom))
-            {
-                Clients.Client(Context.ConnectionId).RedirectToUrl("/create-game-room");
+            var isHostActive = hosts.TryGetValue(oldConnectionId, out var hostData);
+
+            if (hostData == null)
                 return;
+
+            foreach (var roomDictionary in hostData)
+            {
+                var gameRoom = roomDictionary.Value;
+
+                gameRoom.adminConnectionId = Context.ConnectionId;
+                Groups.AddToGroupAsync(Context.ConnectionId, gameRoom.name);
             }
 
-            Clients.Client(connectionId).Connected(gameRoom.GamePipeline?.CurrentStep);
+            hosts.Remove(oldConnectionId);
+            hosts.Add(Context.ConnectionId, hostData);
         }
 
         public int CreateGameRoom(string name)
         {
             // this is host group with all players in all roms
-            Groups.AddToGroupAsync(Context.ConnectionId, Context.ConnectionId);
+            Groups.AddToGroupAsync(Context.ConnectionId, _hostId.ToString());
             // this is group for specifi room/game
-            Groups.AddToGroupAsync(Context.ConnectionId, name);
+            Groups.AddToGroupAsync(Context.ConnectionId, _roomId.ToString());
 
             var gameRoom = new GameRoom(name, _roomId, Context.ConnectionId);
             var isAdded = hosts.TryAdd(Context.ConnectionId, new Dictionary<int, GameRoom>() { { _roomId, gameRoom } });
@@ -99,7 +108,7 @@ namespace PubGaming.Api.Hub
     {
         public readonly string name = name;
         public readonly int id = id;
-        public readonly string adminConnectionId = adminConnectionId;
+        public string adminConnectionId = adminConnectionId;
         public int GameId { get; set; }
         public GamePipeline GamePipeline { get; set; }
     }

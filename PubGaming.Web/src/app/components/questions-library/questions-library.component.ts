@@ -17,7 +17,7 @@ export class QuestionsLibraryComponent extends BaseWithLoaderComponent{
   selectedQuestionIds: any[]=[];
   currentViewItems:any[]= [];
   currentPage:number= 0;
-  currentPageSize:number= 12;
+  currentPageSize:number= 20;
   
   constructor(
     private questionService:QuestionTemplateService
@@ -55,8 +55,7 @@ export class QuestionsLibraryComponent extends BaseWithLoaderComponent{
   }
 
   previous = () => {
-    this.currentPage -= 1
-    console.log(this)
+    this.currentPage -= 1;
     this.questionService.getQuestionTemplates(12,this.currentPage)
     .subscribe(result =>{
       this.currentViewItems = result;

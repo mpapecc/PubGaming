@@ -4,20 +4,27 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 100%;
+  width: 100%;
 }
 
 .single-column-form {
-  width: 320px;
   display: grid;
   gap: 10px;
   grid-template-columns: auto;
+  height: 100%;
+  width: 100%;
 }
 
 .double-column-grid {
-  width: 640px;
   display: grid;
-  gap: 10px;
-  grid-template-columns: auto auto;
+  grid-template-columns: 50% 50%;
+  padding: 4px;
+  height: 100%;
+  width: 100%;
+  @media only screen and (max-width: 700px){
+    grid-template-columns: auto;
+  }
 }
 
 .question-answers-container {
@@ -43,4 +50,54 @@
 
 :root {
   --font-family: 'Chakra Petch', sans-serif;
+}
+
+.input {
+
+  background-color: #fff;
+  border-color: rgb(223, 225, 230);
+  color: rgb(9, 30, 66);
+  cursor: pointer;
+  border-radius: 4px;
+  border-width: 1px;
+  border-style: solid;
+  box-sizing: border-box;
+  font-size: 14px;
+  transition: background-color 0.2s ease-in-out 0s, border-color 0.2s ease-in-out 0s;
+  line-height: 1.42857;
+  padding: 8px 6px;
+  width: 100%;
+
+  :hover {
+      background-color: rgb(235, 236, 240);
+  }
+
+  :focus {
+      background-color: rgb(255, 255, 255);
+      border-color: rgb(76, 154, 255);
+  }
+
+  &:focus {
+      outline: none !important;
+      border: 2px solid rgb(215, 219, 230);
+      /* box-shadow: 0 0 4px rgb(215, 219, 230);; */
+  }
+}
+
+.web-only{
+  @media only screen and (max-width: 500px){
+    display: none;
+  }
+}
+
+*::-webkit-scrollbar {
+  width: 12px;
+  background-color: bisque;
+  border-radius: 15px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: gainsboro;    /* color of the scroll thumb */
+  border-radius: 15px;       /* roundness of the scroll thumb */
+  border: 1px solid orange;  /* creates padding around scroll thumb */
 }

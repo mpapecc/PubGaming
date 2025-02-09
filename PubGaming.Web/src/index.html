@@ -29,15 +29,19 @@
 
   html,
   body {
-    display: flex;
-    justify-content: center;
     height: 100%;
     font-family: 'Chakra Petch', sans-serif;
     font-size: 15px;
     margin: 0;
+    width: 100%;
+    margin: auto;
+
+    @media only screen and (min-width: 1200px) {
+      width: 1200px;
+    }
   }
 
-  app-root {
-    width: 1400px;
+  bodyy{
+    padding: 8px;
   }
 </style>

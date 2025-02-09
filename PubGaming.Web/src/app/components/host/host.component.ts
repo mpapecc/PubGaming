@@ -1,58 +1,154 @@
-import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { QuizzesLibraryComponent } from '../quizzes-library/quizzes-library.component';
 import { GameHubService } from 'src/app/services/hubs/game-hub.service';
 import { GameService } from 'src/app/services/game.service';
-
+import { HubConstants } from 'src/app/constants/hub.constants';
+import { Router } from '@angular/router';
+import { FormBuilder } from '@angular/forms';
+import { HostService } from 'src/app/services/host.service';
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-host',
   templateUrl: './host.component.html',
   styleUrls: ['./host.component.css']
 })
-export class HostComponent implements AfterViewInit {
+export class HostComponent implements OnInit, AfterViewInit, AfterViewChecked {
   @ViewChild("quizzes") quizzesLibrary!: QuizzesLibraryComponent
 
   @Input() set roomId(roomId: string) {
-    this._roomId = parseInt(roomId)
+    this._roomId = roomId ? parseInt(roomId) : 0;
   }
   _roomId!: number
   isRoomCreated: boolean = false;
   name: string = "";
   playersInRoom: string[] = [];
   selectedQuiz: any;
+  isLoading: boolean = false;
+  reconnectPossibleToRooms: any[] = []
+  roomName = this.fb.control('')
+  hostConnectionId: string | null = "";
 
   constructor(
     public gameHubService: GameHubService,
-    public quizService: GameService
-  ) {
-    let connectionIdFromLs = localStorage.getItem("connectionId");
+    public quizService: GameService,
+    public router: Router,
+    public fb: FormBuilder,
+    public hostService: HostService,
+    private location: Location,
+    private elRef:ElementRef
+  ) { }
 
-    if (connectionIdFromLs) {
-      console.log("found connection id in local storge  will try to recoonect");
+  ngOnInit(): void {
+    this.hostConnectionId = localStorage.getItem(HubConstants.HostConnectionId);
 
-      this.gameHubService.connect((connectionId) => {
-        console.log(connectionId)
-        console.log(connectionIdFromLs)
-        this.gameHubService.tryReconnectHost(connectionIdFromLs!,this._roomId);
-
-      });
+    if (!this.hostConnectionId) {
+      this.handleWhenReconnectNotPosible()
       return;
     }
-    
-    // this.gameHubService.onNotifyAdminPlayerJoinedRoom(name => this.playersInRoom.push(name));
+
+    this.hostService.isHostActive(this.hostConnectionId, this._roomId).subscribe(result => {
+      this.reconnectPossibleToRooms = result.availableRooms;
+
+      if (result.isHostActive && this._roomId !== 0 && !this.gameHubService.isConnected) {
+        this.reconnectToRoom(this._roomId);
+      }
+      else
+        this.handleWhenReconnectNotPosible();
+    });
   }
 
   ngAfterViewInit(): void {
-    this.quizzesLibrary.onQuizCardClick = (quizId) => {
-      this.quizService.GetGameTemplateById(quizId).subscribe(result => {
-        this.selectedQuiz = result;
-        console.log(quizId)
-        console.log(this._roomId)
-        this.gameHubService.selectGame(this._roomId, parseInt(quizId));
-      })
+    if (this._roomId)
+      this.changeQuizCardOnClick();
+  }
+
+  ngAfterViewChecked() {
+    if (this.quizzesLibrary) {
+      this.changeQuizCardOnClick();
     }
   }
 
   startGame() {
     this.gameHubService.startGame(this._roomId);
+  }
+
+  public reconnectIfPossibleAndCreateGameRoom = () => {
+    this.isLoading = true;
+    if (this.gameHubService.isConnected) {
+      this.createGameRoom();
+    }
+    else if (!this.gameHubService.isConnected && this.hostConnectionId) {
+      this.hostService.isHostActive(this.hostConnectionId).subscribe(result => {
+        if (result.isHostActive)
+          this.reconnectAndCreateRoom(this.hostConnectionId!);
+        else
+          this.connectAndCreateRoom();
+      });
+    }
+    else
+      this.connectAndCreateRoom();
+  }
+
+  private createGameRoom() {
+    this.gameHubService.createGameRoom(this.roomName.value!, (roomId: number) => {
+      this.setRoomId(roomId);
+    }).then(() => this.isLoading = false);
+  }
+
+  reconnectAndCreateRoom(oldConnectionId: string) {
+    this.gameHubService.connect((connectionId) => {
+      this.gameHubService.reconnectHostWithNewConnectionId(oldConnectionId!).then(() => {
+        this.createGameRoom();
+      })
+      localStorage.setItem(HubConstants.HostConnectionId, connectionId);
+
+      this.gameHubService.onNotifyAdminPlayerJoinedRoom(playerName => this.playersInRoom.push(playerName));
+    });
+  }
+
+  private connectAndCreateRoom() {
+    this.gameHubService.connect((connectionId) => {
+      localStorage.setItem(HubConstants.HostConnectionId, connectionId);
+      this.createGameRoom()
+    }).then(() => this.isLoading = false);;
+  }
+
+  private changeQuizCardOnClick = () => {
+    this.quizzesLibrary.onQuizCardClick = (quizId) => {
+      this.quizService.GetGameTemplateById(quizId).subscribe(result => {
+        this.selectedQuiz = result;
+        this.gameHubService.selectGame(this._roomId, parseInt(quizId));
+      })
+    }
+  }
+
+  reconnectToRoom(roomId: number) {
+    if (this.gameHubService.isConnected) {
+      this.setRoomId(roomId);
+      return;
+    }
+
+    let oldConnectionId = localStorage.getItem(HubConstants.HostConnectionId);
+
+    this.gameHubService.connect((connectionId) => {
+      this.gameHubService.reconnectHostWithNewConnectionId(oldConnectionId!);
+      localStorage.setItem(HubConstants.HostConnectionId, connectionId);
+      console.log(roomId)
+
+      if (roomId > 0)
+        this.setRoomId(roomId);
+
+      this.gameHubService.onNotifyAdminPlayerJoinedRoom(playerName => this.playersInRoom.push(playerName));
+    });
+  }
+
+  private handleWhenReconnectNotPosible() {
+    this._roomId = 0;
+    this.location.go("/host");
+  }
+
+  private setRoomId(roomId: number) {
+    this._roomId = roomId;
+    this.location.go(`/host/${roomId}`);
   }
 }
