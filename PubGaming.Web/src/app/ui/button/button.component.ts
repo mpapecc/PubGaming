@@ -10,4 +10,5 @@ export class ButtonComponent {
   @Input() isDisabled: boolean = false;
   @Input() onClick: Function = () => {};
   @Input() onClickParams: Parameters<any> = [];
+  @Input() type:string = "button";
 }

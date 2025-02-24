@@ -19,7 +19,6 @@ export class HostComponent implements OnInit, AfterViewInit, AfterViewChecked {
     this._roomId = roomId ? parseInt(roomId) : 0;
   }
   _roomId!: number
-  isRoomCreated: boolean = false;
   name: string = "";
   playersInRoom: string[] = [];
   selectedQuiz: any;
@@ -51,6 +50,8 @@ export class HostComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
       if (result.isHostActive && this._roomId !== 0 && !this.gameHubService.isConnected) {
         this.reconnectToRoom(this._roomId);
+        let roomData = this.getRoomFromAvailableRoomsById(this._roomId);
+        this.selectedQuiz = roomData.game
       }
       else
         this.handleWhenReconnectNotPosible();
@@ -117,13 +118,16 @@ export class HostComponent implements OnInit, AfterViewInit, AfterViewChecked {
     this.quizzesLibrary.onQuizCardClick = (quizId) => {
       this.quizService.GetGameTemplateById(quizId).subscribe(result => {
         this.selectedQuiz = result;
-        this.gameHubService.selectGame(this._roomId, parseInt(quizId));
+        this.gameHubService.selectGame(this._roomId, quizId);
       })
     }
   }
 
   reconnectToRoom(roomId: number) {
     if (this.gameHubService.isConnected) {
+      console.log(this.reconnectPossibleToRooms)
+      var roomData = this.getRoomFromAvailableRoomsById(roomId);
+      this.selectedQuiz = roomData.game
       this.setRoomId(roomId);
       return;
     }
@@ -150,5 +154,9 @@ export class HostComponent implements OnInit, AfterViewInit, AfterViewChecked {
   private setRoomId(roomId: number) {
     this._roomId = roomId;
     this.location.go(`/host/${roomId}`);
+  }
+
+  private getRoomFromAvailableRoomsById(roomId : number){
+    return this.reconnectPossibleToRooms.find(x => x.id === roomId)
   }
 }

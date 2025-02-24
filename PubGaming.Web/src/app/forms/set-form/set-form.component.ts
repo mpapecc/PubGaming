@@ -60,9 +60,8 @@ export class SetFormComponent implements OnInit {
   onSubmit() {
     if (!this.setForm.dirty)
       return;
-    
     this.isLoading = true;
-    let saveCall = this.setId ? this.quizSetTemplateService.updateSet(this.setForm.value) : this.quizSetTemplateService.createNewSet(this.setForm.value);
+    let saveCall = this.setId > 0 ? this.quizSetTemplateService.updateSet(this.setForm.value) : this.quizSetTemplateService.createNewSet(this.setForm.value);
     saveCall.subscribe(() => {
       this.isLoading = false;
     });
@@ -93,6 +92,7 @@ export class SetFormComponent implements OnInit {
     this.selectedQuestionsFromLibrary.forEach(x => {
       this.addNewQuestionToSet(x);
     })
+    this.setForm.markAsDirty();
     this.selectedQuestionsFromLibrary = [];
   }
 

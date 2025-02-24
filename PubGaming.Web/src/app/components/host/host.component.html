@@ -1,4 +1,4 @@
-<div *ngIf="!_roomId" class="flex-center-column">
+<div *ngIf="!_roomId" class="flex-center-column no-room">
     <div class="single-column-form create-room-form-wrapper" style="height: auto;max-width: 500px;">
         <app-form-input [formControl]="roomName" placeholder="ID Sobe"></app-form-input>
         <app-button text="Stvori sobu" [onClick]="reconnectIfPossibleAndCreateGameRoom"></app-button>
@@ -9,11 +9,11 @@
         <div class="double-column-grid reconnect-possibilites-rooms">
             <app-card *ngFor="let room of reconnectPossibleToRooms" (click)="reconnectToRoom(room.id)" class="app-card">
                 <div>
-                    <div>
-                        ime sobe : {{room.name}}
+                    <div class="game-picture-container">
+                        <img style="width: 120px;" src="/assets/media/quiz-placeholder.jpg" class="img-fluid rounded-start" alt="/assets/media/quiz-placeholder.jpg">
                     </div>
                     <div>
-                        <img style="width: 120px;" src="/assets/media/quiz-placeholder.jpg" class="img-fluid rounded-start" alt="/assets/media/quiz-placeholder.jpg">
+                        ime sobe : {{room.name}}
                     </div>
                 </div>
             </app-card>
@@ -21,20 +21,23 @@
     </div>
 </div>
 
-<div *ngIf="_roomId">
-    Room {{name}} is created. Room Id is {{_roomId}}. Players can use this Id to connect to room.
-
+<div *ngIf="_roomId" class="room-selected">
+    <div class="room-info">
+        Room {{name}} is created. Room Id is {{_roomId}}. Players can use this Id to connect to room.
     <ul>
         <li *ngFor="let player of playersInRoom">
             {{player}}
         </li>
     </ul>
+    </div>
 
-    <app-quizzes-library *ngIf="!selectedQuiz" #quizzes></app-quizzes-library>
+    <div class="game-selection">
+        <app-quizzes-library *ngIf="!selectedQuiz" #quizzes></app-quizzes-library>
 
-    <div *ngIf="selectedQuiz">
-        {{selectedQuiz.name}}
-        <app-button [onClick]="startGame" text="Pokreni"></app-button>
+        <div *ngIf="selectedQuiz">
+            {{selectedQuiz.name}}
+            <app-button [onClick]="startGame" text="Pokreni"></app-button>
+        </div>
     </div>
 </div>
 

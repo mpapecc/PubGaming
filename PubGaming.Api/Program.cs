@@ -37,6 +37,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+app.MapControllers();
 app.UseCors("pubgaming.dev");
 app.MapHub<GameHub>("/game");
 app.Run();

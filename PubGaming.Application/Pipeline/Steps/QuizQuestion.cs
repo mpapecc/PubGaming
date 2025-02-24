@@ -1,10 +1,11 @@
-﻿using PubGaming.Domain.Entites;
+﻿using PubGaming.Application.Models;
+using PubGaming.Domain.Entites;
 
 namespace PubGaming.Application.Pipeline.Steps
 {
-    public class QuizQuestion(Question question) : IStep
+    public class QuizQuestion(QuestionDto question) : IStep
     {
-        private readonly Question question = question;
+        private readonly QuestionDto question = question;
 
         public void Run(Func<dynamic, Task> sendToClients)
         {

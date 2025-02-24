@@ -1,4 +1,5 @@
-﻿using PubGaming.Application.Pipeline.Steps;
+﻿using PubGaming.Application.Models;
+using PubGaming.Application.Pipeline.Steps;
 using PubGaming.Domain.Entites;
 
 namespace PubGaming.Application.Pipeline
@@ -9,7 +10,7 @@ namespace PubGaming.Application.Pipeline
         private readonly GameSettings gameSettings;
         public IStep CurrentStep { get; set; }
 
-        public GamePipeline(GameSettings gameSettings, IList<Set> sets)
+        public GamePipeline(GameSettings gameSettings, IList<SetDto> sets)
         {
             this.gameSettings = gameSettings;
 
@@ -34,7 +35,7 @@ namespace PubGaming.Application.Pipeline
             steps.Add(step);
         }
 
-        public virtual void PreProcessSteps(IList<Set> sets)
+        public virtual void PreProcessSteps(IList<SetDto> sets)
         {
             Register(new DelayStep(gameSettings.StartDelay, DelayType.BeforeGame));
 
@@ -52,7 +53,7 @@ namespace PubGaming.Application.Pipeline
             Register(new DelayStep(gameSettings.EndDelay, DelayType.AfterGame));
         }
 
-        private static IStep GetStepObjectByQuestionType(Question question)
+        private static IStep GetStepObjectByQuestionType(QuestionDto question)
         {
             switch (question.QuestionType)
             {

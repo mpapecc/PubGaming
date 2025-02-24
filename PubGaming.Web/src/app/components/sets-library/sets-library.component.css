@@ -1,3 +1,25 @@
-.set-card{
+.set-card {
     cursor: pointer;
+}
+
+.sets-library-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .search {
+        display: flex;
+        justify-content: center;
+    }
+
+    .sets-view {
+        flex: 1;
+        overflow-y: auto;
+    }
+
+    .paginator {
+        display: flex;
+        justify-content: center;
+        margin: 10px;
+    }
 }

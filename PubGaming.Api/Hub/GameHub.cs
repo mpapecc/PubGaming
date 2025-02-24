@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using PubGaming.Application;
+using PubGaming.Application.Mappers;
+using PubGaming.Application.Models;
 using PubGaming.Application.Pipeline;
 using PubGaming.Domain.Entites;
 
@@ -69,16 +71,15 @@ namespace PubGaming.Api.Hub
         public void SelectGame(int roomId, int gameId)
         {
             var gameRoom = GetGameRoom(roomId);
+            var game = this.gameRepository.Query().Where(x => x.Id == gameId).FirstOrDefault()?.ToGameDto();
             gameRoom.GameId = gameId;
+            gameRoom.Game = game;
         }
 
         public void StartGame(int roomId)
         {
-            var gameRoom = GetGameRoom(roomId); 
-            var sets = this.gameRepository.Query()
-                .Where(x => x.Id == gameRoom.GameId)
-                .Select(x => x.Sets)
-                .FirstOrDefault();
+            var gameRoom = GetGameRoom(roomId);
+            var sets = gameRoom.Game.Sets;
 
             var quizSettings = new GameSettings() 
             { 
@@ -110,6 +111,7 @@ namespace PubGaming.Api.Hub
         public readonly int id = id;
         public string adminConnectionId = adminConnectionId;
         public int GameId { get; set; }
+        public GameDto? Game { get; set; }
         public GamePipeline GamePipeline { get; set; }
     }
 }

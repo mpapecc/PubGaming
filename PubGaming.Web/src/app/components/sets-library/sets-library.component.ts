@@ -32,7 +32,7 @@ export class SetsLibraryComponent implements OnInit {
       })
   }
 
-  next() {
+  next = () => {
     this.currentPage += 1
     this.quizSetTemplateService.getSetTemplates(12, this.currentPage)
       .subscribe(result => {
@@ -40,7 +40,7 @@ export class SetsLibraryComponent implements OnInit {
       })
   }
 
-  previous() {
+  previous = () => {
     this.currentPage -= 1
     this.quizSetTemplateService.getSetTemplates(12, this.currentPage)
       .subscribe(result => {

@@ -1,8 +1,8 @@
-.create-room-form-wrapper{
+.create-room-form-wrapper {
     height: auto;
 }
 
-.reconnect-possibilites-options{
+.reconnect-possibilites-options {
     width: 100%;
     padding-top: 20px;
     flex: 1;
@@ -10,22 +10,42 @@
     display: flex;
     flex-direction: column;
 
-    .reconnect-possibilites-title{
+    .reconnect-possibilites-title {
         text-align: center;
         height: auto;
     }
 
-    .reconnect-possibilites-rooms{
+    .reconnect-possibilites-rooms {
         /* height: 90%; */
         flex: 1;
-        overflow:auto;
+        overflow: auto;
         padding: 8px;
 
-        .app-card{
+        .app-card {
             height: 200px;
             display: block;
             cursor: pointer;
-            
+
+            .game-picture-container {
+                display: flex;
+                justify-content: center;
+            }
+
         }
+    }
+}
+
+.room-selected {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .room-info {
+        height: auto;
+    }
+
+    .game-selection {
+        flex: 1;
+        overflow-y: auto;
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.SignalR;
 using PubGaming.Api.Hub;
 using PubGaming.Application.Models;
+using PubGaming.Domain.Entites;
 
 namespace PubGaming.Api.Controllers
 {
@@ -22,14 +23,14 @@ namespace PubGaming.Api.Controllers
             var isHostActive = GameHub.hosts.TryGetValue(hostConnectionId, out var hostData);
 
             if (roomId == 0 || roomId == null)
-                return new IsHostActiveResponse() { IsHostActive = isHostActive, AvailableRooms = hostData?.Select(x => new { x.Value.id, x.Value.name }) };
+                return new IsHostActiveResponse() { IsHostActive = isHostActive, AvailableRooms = hostData?.Select(x => new RoomData { Game = x.Value.Game, Id = x.Value.id, Name = x.Value.name }) };
 
             if (hostData == null)
                 return new IsHostActiveResponse() { IsHostActive = false };
 
-            var isRoomActive = hostData.TryGetValue(roomId.Value, out var _);
+            var isRoomActive = hostData.TryGetValue(roomId.Value, out var roomData);
 
-            return new IsHostActiveResponse() { IsHostActive = isRoomActive }; ;
+            return new IsHostActiveResponse() { IsHostActive = isRoomActive, AvailableRooms = hostData?.Select(x => new RoomData { Game = x.Value.Game, Id = x.Value.id, Name = x.Value.name }) };
         }
     }
 }

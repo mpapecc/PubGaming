@@ -1,36 +1,43 @@
 <div class="quiz-library-wrapper">
-  <div class="paginator">
+  <div class="search">
     <app-input placeholder="Trazi po imenu kviza"></app-input>
-  
-    <div>
-      <app-button [onClick]="previous" [isDisabled]="isFirstPage()" text="Previous" />
-      <app-button [onClick]="next" [isDisabled]="!isNextAvailable()" text="Next" />
-    </div>
+   
+    <app-button [onClick]="openQuizDetailsFlyout" [onClickParams]="[0]" text="+ Novi kviz"></app-button>
   </div>
-  
-  <div class="double-column-grid quizz-card-grid" style="margin: 0;">
-  
+
+  <div class="card-grid quizz-card-grid" style="margin: 0;">
+
     <div *ngFor="let quiz of quizzes">
-      
+
       <app-card>
-        <div (click)="onQuizCardClick(quiz.id, $event)">
-          <div >
-            <img style="width: 120px;" src="/assets/media/quiz-placeholder.jpg" class="img-fluid rounded-start" alt="/assets/media/quiz-placeholder.jpg">
+        <div (click)="onQuizCardClick(quiz.id)">
+          <div>
+            <img style="width: 120px;" src="/assets/media/quiz-placeholder.jpg" class="img-fluid rounded-start"
+              alt="/assets/media/quiz-placeholder.jpg">
           </div>
           <div>
             <div class="card-body">
               <h5 class="card-title">{{quiz.name}}</h5>
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
+                content. This content is a little bit longer.</p>
               <p class="card-text">
-                <a (click)="openQuizDetailsFlyout(quiz.id, $event)" style="cursor: pointer;" class="link-secondary">Broj setova : {{quiz.sets.length}}</a>
+                <a (click)="openQuizDetailsFlyout(quiz.id)" style="cursor: pointer;" class="link-secondary">Broj
+                  setova : {{quiz.sets.length}}</a>
               </p>
               <p class="card-text">
-                <a (click)="openQuizDetailsFlyout(quiz.id, $event)" style="cursor: pointer;" class="link-secondary">Broj pitanja : {{calculateQuizQuizestionsCount(quiz.sets)}}</a>
+                <a (click)="openQuizDetailsFlyout(quiz.id)" style="cursor: pointer;" class="link-secondary">Broj
+                  pitanja : {{calculateQuizQuizestionsCount(quiz.sets)}}</a>
               </p>
             </div>
           </div>
         </div>
       </app-card>
+    </div>
+
   </div>
-  
+
+  <div class="paginator">
+    <app-button [onClick]="previous" [isDisabled]="isFirstPage()" text="Previous" />
+    <app-button [onClick]="next" [isDisabled]="!isNextAvailable()" text="Next" />
+  </div>
 </div>

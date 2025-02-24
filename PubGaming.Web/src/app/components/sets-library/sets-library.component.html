@@ -1,27 +1,31 @@
-<div>
-    <div>
-        <label for="first-name">Ime seta</label>
-        <input class="form-control" aria-label="With textarea" placeholder="Trazi po imenu seta">
-    </div>
-    <button *ngIf="!canSelect" type='button' class="btn btn-primary" (click)="openSetFormFlyout()">+ Novi set</button>
-    <app-button *ngIf="!canSelect" text="+ Novi set" [onClick]="openSetFormFlyout" [onClickParams]="[0]"></app-button>
-    <div>
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-              <li  class="page-item"><button (click)="previous()" [disabled]="isFirstPage()" class="page-link" >Previous</button></li>
-              <li class="page-item"><button (click)="next()" [disabled]="!isNextAvailable()" class="page-link" >Next</button></li>
-            </ul>
-        </nav>
-    </div>
-</div>
-
-<div class="row row-cols-1 row-cols-md-4 g-4" style="margin: 0;">
-    <div class="col" *ngFor="let item of currentViewItems" >
-        <app-set-card (click)="openSetFormFlyout(item.id)" class="set-card" [set]="item"></app-set-card>
-        <div class="d-flex justify-content-center" style="background-color: white;"> 
-            <input style="position: relative; display:none" *ngIf="canSelect" type="checkbox"  class="btn-check" autocomplete="off">
-            <label *ngIf="canSelect && !isSetSelected(item.id)" class="btn btn-outline-secondary w-100" (click)="addSetToList(item.id)">Dodaj u kviz</label>
-            <h4 style="color: #1962FF;"><i *ngIf="isSetSelected(item.id)" class="bi bi-check-circle-fill" (click)="addSetToList(item.id)"></i></h4>
+<div class="sets-library-wrapper">
+    <div class="search">
+        <div>
+            <app-input placeholder="Trazi po imenu seta"></app-input>
         </div>
+        <app-button *ngIf="!canSelect" text="+ Novi set" [onClick]="openSetFormFlyout"
+            [onClickParams]="[0]"></app-button>
+
+    </div>
+
+    <div class="sets-view card-grid">
+        <div class="" *ngFor="let item of currentViewItems">
+            <app-card>
+                <app-set-card (click)="openSetFormFlyout(item.id)" class="set-card" [set]="item"></app-set-card>
+                <div class="justify-content-center" style="background-color: white;">
+                    <input style="position: relative; display:none" *ngIf="canSelect" type="checkbox" class="btn-check"
+                        autocomplete="off">
+                    <label *ngIf="canSelect && !isSetSelected(item.id)" class="btn btn-outline-secondary w-100"
+                        (click)="addSetToList(item.id)">Dodaj u kviz</label>
+                    <h4 style="color: #1962FF;"><i *ngIf="isSetSelected(item.id)" class="bi bi-check-circle-fill"
+                            (click)="addSetToList(item.id)"></i></h4>
+                </div>
+            </app-card>
+        </div>
+    </div>
+
+    <div class="paginator">
+        <app-button [onClick]="previous" [isDisabled]="isFirstPage()" text="Previous"></app-button>
+        <app-button [onClick]="next" [isDisabled]="!isNextAvailable()" text="Next"></app-button>
     </div>
 </div>

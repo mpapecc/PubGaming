@@ -82,7 +82,8 @@ export class QuizBuilderComponent implements OnInit {
     this.sets.push(this.fb.group({
       name: this.fb.control("New sett"),
       gameId: this.fb.control(this.quiz.id),
-      questions: this.fb.array([])
+      questions: this.fb.array([]),
+      description: this.fb.control('')
     }));
   }
 
@@ -202,6 +203,7 @@ export class QuizBuilderComponent implements OnInit {
           x.id = 0;
           x.gameId = this.quiz.id;
           x.questions.forEach((x: any) => x.id = 0);
+          x.description ?? "";
           let setControl = this.formControlMappers.mapSetToFbGroup(x);
           this.sets.push(setControl);
         })

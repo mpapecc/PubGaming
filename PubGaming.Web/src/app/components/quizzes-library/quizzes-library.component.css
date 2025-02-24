@@ -1,13 +1,20 @@
-.quiz-library-wrapper{
+.quiz-library-wrapper {
     display: flex;
     flex-direction: column;
     height: 100%;
-    
-    .paginator{
-        height: auto;
+
+    .search{
+        display: flex;
+        justify-content: center;
     }
 
-    .quizz-card-grid{
+    .paginator {
+        display: flex;
+        justify-content: center;
+        margin: 10px;
+    }
+
+    .quizz-card-grid {
         flex: 1;
         overflow-y: auto;
     }

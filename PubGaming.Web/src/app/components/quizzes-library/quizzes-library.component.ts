@@ -11,7 +11,7 @@ import { Flyout, FlyoutService } from 'src/app/services/flyout.service';
 export class QuizzesLibraryComponent implements OnInit {
   quizzes: any[] = [];
   currentPage: number = 0;
-  currentPageSize: number = 8;
+  currentPageSize: number = 20;
   isQuizDetailsOpen: boolean = false;
   flyoutData: Flyout<any> = new Flyout<any>();
   constructor(
@@ -29,20 +29,21 @@ export class QuizzesLibraryComponent implements OnInit {
     return quizSets.reduce((total, set) => total += set.questions.length, 0)
   }
 
-  openQuizDetailsFlyout(quizId: string, $event: any) {
+  openQuizDetailsFlyout = (quizId: number) => {
     this.flyoutData.content = QuizBuilderComponent;
     this.flyoutData.title = "Novi kviz";
 
     this.flyoutService.create(this.flyoutData).subscribe((quizBuilder) => {
       console.log(quizBuilder)
-      quizBuilder.quizId = quizId;
+      if(quizId > 0)
+        quizBuilder.quizId = quizId;
     });
 
-    $event.stopPropagation()
+    // $event.stopPropagation()
   }
 
-  onQuizCardClick(quizId: string, $event: any) {
-    this.openQuizDetailsFlyout(quizId, $event);
+  onQuizCardClick = (quizId: number) => {
+    this.openQuizDetailsFlyout(quizId);
   }
 
   next = () => {
