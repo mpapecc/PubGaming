@@ -61,6 +61,8 @@ namespace PubGaming.Api.Hub
         public void JoinRoom(string playerName, int roomId)
         {
             var gameRoom = GetGameRoom(roomId);
+            var playerData = new PlayerData(Context.ConnectionId, playerName);
+            gameRoom.playersConnectionIds.Add(playerData);
 
             Groups.AddToGroupAsync(Context.ConnectionId, gameRoom.name);
 
@@ -105,13 +107,4 @@ namespace PubGaming.Api.Hub
         }
     }
 
-    public class GameRoom(string name, int id, string adminConnectionId)
-    {
-        public readonly string name = name;
-        public readonly int id = id;
-        public string adminConnectionId = adminConnectionId;
-        public int GameId { get; set; }
-        public GameDto? Game { get; set; }
-        public GamePipeline GamePipeline { get; set; }
-    }
 }

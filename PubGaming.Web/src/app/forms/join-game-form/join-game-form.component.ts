@@ -22,6 +22,7 @@ export class JoinGameFormComponent {
   });
 
   onSubmit() {
+    console.log("i m")
     let playerName = this.profileForm.get("name")!.value!; 
     let roomId = this.profileForm.get("roomId")!.value!; 
 

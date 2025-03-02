@@ -7,15 +7,4 @@
         display: flex;
         justify-content: center;
     }
-
-    .paginator {
-        display: flex;
-        justify-content: center;
-        margin: 10px;
-    }
-
-    .quizz-card-grid {
-        flex: 1;
-        overflow-y: auto;
-    }
 }

@@ -10,8 +10,7 @@ import { BaseInput } from '../base-input';
 export class InputComponent extends BaseInput  {
   onChange: (value: any) => void = () => {};
   onTouched: () => void = () => {};
-  value: string = "";
-
+  @Input() value: string = "";
   constructor() {
     super();
   }

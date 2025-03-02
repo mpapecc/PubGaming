@@ -52,6 +52,11 @@ export class QuizBuilderComponent implements OnInit {
     return this.getQuizSetQuestions(setIndex)?.at(questionIndex)?.get("answers") as unknown as FormArray;
   }
 
+  getQuestionsText(setIndex: number, questionIndex: number){
+    return this.getQuizSetQuestions(setIndex)?.at(questionIndex)?.get("text")?.value;
+
+  }
+
   constructor(
     public gameService: GameService,
     public quizSetTemplateService: SetTemplateService,

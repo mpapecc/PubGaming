@@ -3,5 +3,6 @@
     class="input"
     [(ngModel)]="value" 
     [placeholder]="placeholder"
-    (input)="onChange($any($event.target).value)">
+    (input)="onChange($any($event.target).value)"
+    [disabled]="disabled">
 

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Flyout, FlyoutService } from 'src/app/services/flyout.service';
+import { Flyout, FlyoutService, FlyoutSize } from 'src/app/services/flyout.service';
 import { FormControlMappersService } from 'src/app/services/form-control-mappers.service';
 import { SetTemplateService } from 'src/app/services/set-template.service';
 import { QuestionFormComponent } from '../question-form/question-form.component';
@@ -28,9 +28,14 @@ export class SetFormComponent implements OnInit {
     return this.setForm.get("questions") as unknown as FormArray;
   }
 
+  getQuestionText(questionIndex: number){
+    return this.questions.at(questionIndex)?.get("text")?.value
+  }
+
   getQuestionAnswers(questionIndex: number) {
     return this.questions.at(questionIndex)?.get("answers") as unknown as FormArray;
   }
+
   constructor(
     private fb: FormBuilder,
     private quizSetTemplateService: SetTemplateService,
@@ -75,6 +80,7 @@ export class SetFormComponent implements OnInit {
   openQuestionLibraryFlyout() {
     this.flyoutData.title = "Novo pitanje"
     this.flyoutData.content = QuestionsLibraryComponent
+    this.flyoutData.size = FlyoutSize.Large;
     this.flyoutData.onClose = () => {
       if (this.selectedQuestionsFromLibrary.length > 0)
         this.onQuestionLibraryClose();
@@ -97,8 +103,9 @@ export class SetFormComponent implements OnInit {
   }
 
   openNewQuestionFlyout() {
-    this.flyoutData.title = "Novo pitanje"
-    this.flyoutData.content = QuestionFormComponent
+    this.flyoutData.title = "Novo pitanje";
+    this.flyoutData.content = QuestionFormComponent;
+    this.flyoutData.size = FlyoutSize.Small;
 
     this.flyoutService.create<QuestionFormComponent>(this.flyoutData).subscribe(questionForm => {
       questionForm.onSubmitEvent.asObservable().subscribe(result => {

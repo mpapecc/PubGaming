@@ -1,44 +1,34 @@
-.questions-library{
+.questions-library {
     height: 100%;
     display: flex;
     flex-direction: column;
-    .questions{
+
+    .questions {
         flex: 1;
         overflow-y: auto;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(50, max-content);
 
-        .question-container{
+        .expansion-panel {
+            border-radius: 8px;
+        }
+
+        .question-container {
             margin-bottom: 10px;
-            .question-text{
-                border:  1px solid #1962FF;
+
+            .question-text {
                 padding: 8px;
                 border-radius: 4px;
                 display: flex;
-                
-                &:hover{
-                    background-color: aliceblue;
-                    cursor: pointer;
-                }
             }
-            
-            .details{
-                display: none;
-        
-                &.expanded{
-                    display: flex;
-                    flex-wrap: wrap;
-                }
-                border: 1px solid;
-        
-                .answer{
+
+            .details {
+                .answer {
                     flex: 1 0 40%;
                     text-align: center;
                 }
             }
         }
     }
-
-    .pagination{
-        height: auto;
-    }
 }
-

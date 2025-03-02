@@ -1,0 +1,38 @@
+.expansion-panel{
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    border-radius: 8px;
+    
+    .expansion-header{
+        padding: 8px;
+        cursor: pointer;
+        background-color: #ece9e6;
+        border-radius: 8px;
+
+        &:hover{
+            background-color: #e5e3e1;
+            border-radius: inherit;
+        }
+
+        &.expanded {
+            background-color: #e5e3e1;
+            border-radius: inherit;
+        }
+    }
+
+    .expansion-content{
+        overflow-y: auto;
+    }
+    
+    .expanded {
+        max-height: 500px;
+        opacity: 1;
+        transition: max-height 0.2s ease, opacity 0.2s ease;
+    }
+    
+    .expansion-content:not(.expanded) {
+        max-height: 0;
+        opacity: 0;
+        transition: max-height 0.2s ease, opacity 0.2s ease;
+    }
+}
+

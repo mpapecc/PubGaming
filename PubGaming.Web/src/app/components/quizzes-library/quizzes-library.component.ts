@@ -11,7 +11,7 @@ import { Flyout, FlyoutService } from 'src/app/services/flyout.service';
 export class QuizzesLibraryComponent implements OnInit {
   quizzes: any[] = [];
   currentPage: number = 0;
-  currentPageSize: number = 20;
+  currentPageSize: number = 12;
   isQuizDetailsOpen: boolean = false;
   flyoutData: Flyout<any> = new Flyout<any>();
   constructor(

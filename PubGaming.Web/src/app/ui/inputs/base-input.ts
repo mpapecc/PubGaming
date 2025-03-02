@@ -6,7 +6,7 @@ export abstract class BaseInput {
     @Output() valueChange = new EventEmitter<string>();
     @Output() blur: EventEmitter<void> = new EventEmitter<void>();
     @Input() placeholder: string = '';
-    disabled!: boolean;
+    @Input() disabled: boolean = false;
     abstract onChange: (value: any) => void;
-    abstract onTouched: () => void ;
+    abstract onTouched: () => void;
 }

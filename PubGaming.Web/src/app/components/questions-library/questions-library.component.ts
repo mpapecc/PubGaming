@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Observable, Subscriber, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { BaseWithLoaderComponent } from 'src/app/infrastructure/baseComponents/base-with-loader/base-with-loader.component';
-import { LoaderService } from 'src/app/services/loader.service';
 import { QuestionTemplateService } from 'src/app/services/question.service';
 
 @Component({
@@ -10,14 +9,13 @@ import { QuestionTemplateService } from 'src/app/services/question.service';
   styleUrls: ['./questions-library.component.css']
 })
 export class QuestionsLibraryComponent extends BaseWithLoaderComponent{
-
   @Input() canSelect:boolean = false;
   @Output() selectedQuestionIdsChange = new EventEmitter<number[]>();
 
   selectedQuestionIds: any[]=[];
   currentViewItems:any[]= [];
   currentPage:number= 0;
-  currentPageSize:number= 20;
+  currentPageSize:number= 26;
   
   constructor(
     private questionService:QuestionTemplateService
@@ -29,11 +27,6 @@ export class QuestionsLibraryComponent extends BaseWithLoaderComponent{
     return this.questionService.getQuestionTemplates(this.currentPageSize,this.currentPage).subscribe((questions)=>{
       this.currentViewItems = questions;
     });
-  }
-
-  changeQuestionDetailsState(questionId:number){
-    let classList = document.getElementById(questionId.toString())!.classList;
-    classList.contains("expanded") ? classList.remove("expanded") : classList.add("expanded");
   }
 
   changeSelectedState(question:any){
@@ -48,7 +41,7 @@ export class QuestionsLibraryComponent extends BaseWithLoaderComponent{
 
   next = () => {
     this.currentPage += 1
-    this.questionService.getQuestionTemplates(12,this.currentPage)
+    this.questionService.getQuestionTemplates(this.currentPageSize,this.currentPage)
     .subscribe(result =>{
       this.currentViewItems = result;
     })
@@ -56,7 +49,7 @@ export class QuestionsLibraryComponent extends BaseWithLoaderComponent{
 
   previous = () => {
     this.currentPage -= 1;
-    this.questionService.getQuestionTemplates(12,this.currentPage)
+    this.questionService.getQuestionTemplates(this.currentPageSize,this.currentPage)
     .subscribe(result =>{
       this.currentViewItems = result;
     })

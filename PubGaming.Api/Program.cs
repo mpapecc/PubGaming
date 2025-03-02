@@ -1,3 +1,4 @@
+using Microsoft.Extensions.FileProviders;
 using PubGaming.Api.Hub;
 using PubGaming.Application;
 using PubGaming.Persistance;
@@ -35,8 +36,12 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
+app.UseStaticFiles(new StaticFileOptions()
+{
+    RequestPath = "/resources",
+    FileProvider = new PhysicalFileProvider(@"C:\pubgaming_resources")
+});
 app.MapControllers();
 app.UseCors("pubgaming.dev");
 app.MapHub<GameHub>("/game");

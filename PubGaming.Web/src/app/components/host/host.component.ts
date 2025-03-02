@@ -20,7 +20,7 @@ export class HostComponent implements OnInit, AfterViewInit, AfterViewChecked {
   }
   _roomId!: number
   name: string = "";
-  playersInRoom: string[] = [];
+  playersInRoom: any[] = [];
   selectedQuiz: any;
   isLoading: boolean = false;
   reconnectPossibleToRooms: any[] = []
@@ -34,7 +34,7 @@ export class HostComponent implements OnInit, AfterViewInit, AfterViewChecked {
     public fb: FormBuilder,
     public hostService: HostService,
     private location: Location,
-    private elRef:ElementRef
+    private elRef: ElementRef
   ) { }
 
   ngOnInit(): void {
@@ -50,8 +50,6 @@ export class HostComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
       if (result.isHostActive && this._roomId !== 0 && !this.gameHubService.isConnected) {
         this.reconnectToRoom(this._roomId);
-        let roomData = this.getRoomFromAvailableRoomsById(this._roomId);
-        this.selectedQuiz = roomData.game
       }
       else
         this.handleWhenReconnectNotPosible();
@@ -69,7 +67,7 @@ export class HostComponent implements OnInit, AfterViewInit, AfterViewChecked {
     }
   }
 
-  startGame() {
+  startGame = () => {
     this.gameHubService.startGame(this._roomId);
   }
 
@@ -101,6 +99,7 @@ export class HostComponent implements OnInit, AfterViewInit, AfterViewChecked {
       this.gameHubService.reconnectHostWithNewConnectionId(oldConnectionId!).then(() => {
         this.createGameRoom();
       })
+
       localStorage.setItem(HubConstants.HostConnectionId, connectionId);
 
       this.gameHubService.onNotifyAdminPlayerJoinedRoom(playerName => this.playersInRoom.push(playerName));
@@ -124,21 +123,25 @@ export class HostComponent implements OnInit, AfterViewInit, AfterViewChecked {
   }
 
   reconnectToRoom(roomId: number) {
-    if (this.gameHubService.isConnected) {
-      console.log(this.reconnectPossibleToRooms)
-      var roomData = this.getRoomFromAvailableRoomsById(roomId);
-      this.selectedQuiz = roomData.game
-      this.setRoomId(roomId);
-      return;
-    }
+    this.gameHubService.isConnected ? this.handleSoftReconnect(roomId) : this.handleHardReconnect(roomId);
+  }
 
+  private handleSoftReconnect(roomId: number) {
+    var roomData = this.getRoomFromAvailableRoomsById(roomId);
+    this.selectedQuiz = roomData.game
+    this.playersInRoom = roomData.playersData
+    this.setRoomId(roomId);
+  }
+
+  private handleHardReconnect(roomId: number) {
     let oldConnectionId = localStorage.getItem(HubConstants.HostConnectionId);
 
     this.gameHubService.connect((connectionId) => {
       this.gameHubService.reconnectHostWithNewConnectionId(oldConnectionId!);
       localStorage.setItem(HubConstants.HostConnectionId, connectionId);
-      console.log(roomId)
-
+      var roomData = this.getRoomFromAvailableRoomsById(roomId);
+      this.selectedQuiz = roomData.game
+      this.playersInRoom = roomData.playersData
       if (roomId > 0)
         this.setRoomId(roomId);
 
@@ -156,7 +159,7 @@ export class HostComponent implements OnInit, AfterViewInit, AfterViewChecked {
     this.location.go(`/host/${roomId}`);
   }
 
-  private getRoomFromAvailableRoomsById(roomId : number){
+  private getRoomFromAvailableRoomsById(roomId: number) {
     return this.reconnectPossibleToRooms.find(x => x.id === roomId)
   }
 }

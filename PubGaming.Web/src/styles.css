@@ -21,18 +21,25 @@
   grid-template-columns: 50% 50%;
   height: 100%;
   width: 100%;
-  @media only screen and (max-width: 700px){
+
+  @media only screen and (max-width: 700px) {
     grid-template-columns: auto;
   }
 }
 
 .card-grid {
   display: grid;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
   height: 100%;
   width: 100%;
-  @media only screen and (max-width: 700px){
+  gap: 16px;
+  padding: 16px 8px;
+  overflow-y: auto;
+
+  @media only screen and (max-width: 700px) {
     grid-template-columns: auto;
+    grid-template-rows: auto;
   }
 }
 
@@ -76,37 +83,101 @@
   line-height: 1.42857;
   padding: 8px 6px;
   width: 100%;
+  height: 100%;
 
   :hover {
-      background-color: rgb(235, 236, 240);
+    background-color: rgb(235, 236, 240);
   }
 
   :focus {
-      background-color: rgb(255, 255, 255);
-      border-color: rgb(76, 154, 255);
+    background-color: rgb(255, 255, 255);
+    border-color: rgb(76, 154, 255);
   }
 
   &:focus {
-      outline: none !important;
-      border: 2px solid rgb(215, 219, 230);
-      /* box-shadow: 0 0 4px rgb(215, 219, 230);; */
+    outline: none !important;
+    border: 2px solid rgb(215, 219, 230);
+    /* box-shadow: 0 0 4px rgb(215, 219, 230);; */
   }
 }
 
-.web-only{
-  @media only screen and (max-width: 500px){
+.web-only {
+  @media only screen and (max-width: 500px) {
     display: none;
   }
 }
 
 *::-webkit-scrollbar {
-  width: 12px;
-  background-color: bisque;
-  border-radius: 15px;
+  width: 8px;
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: gainsboro;    /* color of the scroll thumb */
-  border-radius: 15px;       /* roundness of the scroll thumb */
-  border: 1px solid orange;  /* creates padding around scroll thumb */
+  background-color: #ece9e6;
+  /* color of the scroll thumb */
+  border-radius: 16px;
+  /* roundness of the scroll thumb */
+}
+
+.flyout {
+  .content {
+    background: linear-gradient(to right, #ece9e6, #ffffff);
+
+    .header {
+      box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+
+      button {
+        color: #B85042;
+        background: inherit;
+      }
+    }
+  }
+}
+
+.button,
+.header-buttons>button {
+  background-color: #B85042;
+  border-radius: 8px;
+  border-width: 0;
+  color: #ece9e6;
+  cursor: pointer;
+  line-height: 20px;
+  margin: 0;
+  padding: 10px 12px;
+  text-align: center;
+  font-family: var(--font-family);
+  display: inline-block;
+  width: 100%;
+  font-weight: 500;
+
+  &:hover {
+    outline: 1px solid rgba(51, 51, 51, 0.1);
+  }
+
+  &:active {
+    background-color: #d05e4f;
+    transition: background-color 100ms linear;
+  }
+
+  &:disabled {
+    background-color: rgba(51, 51, 51, 0.05);
+    outline: none;
+    cursor: default;
+  }
+}
+
+.checkbox {
+  width: 20px;
+  height: 100%;
+  accent-color: green;
+  color: green;
+}
+
+.search {
+  border-bottom: 1px solid #ece9e6;
+}
+
+.paginator {
+  display: flex;
+  justify-content: center;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }

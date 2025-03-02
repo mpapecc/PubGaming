@@ -1,47 +1,51 @@
 <div class="set-form">
-  <form [formGroup]="setForm" (ngSubmit)="onSubmit()">
-    <label>Ime seta</label>
-    <input class="form-control" aria-label="With textarea" formControlName="name">
-    <label>Kratki opis</label>
-    <textarea class="form-control" aria-label="With textarea" formControlName="description"></textarea>
+  <form [formGroup]="setForm" (ngSubmit)="onSubmit()" style="display: flex">
+    <div class="set-details">
+      <label>Ime seta</label>
+      <app-form-input formControlName="name"></app-form-input>
+      <label>Kratki opis</label>
+      <textarea class="input" style="height: 400px;max-width: 100%;"></textarea>
 
-    <div class="btn-group" role="group" *ngIf="canEdit">
-      <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-        Dodaj pitanje
-      </button>
-      <ul class="dropdown-menu">
-        <li><a class="dropdown-item" (click)="openNewQuestionFlyout()">Novo pitanje</a></li>
-        <li><a class="dropdown-item" (click)="openQuestionLibraryFlyout()">Pitanje iz baze</a></li>
-      </ul>
-    </div>
+      <div class="btn-group" role="group" *ngIf="canEdit">
+        <app-dropdown-button text="Dodaj pitanje">
+          <span (click)="openNewQuestionFlyout()">Novo pitanje</span>
+          <span (click)="openQuestionLibraryFlyout()">Pitanje iz baze</span>
+        </app-dropdown-button>
+        <!-- <ul class="dropdown-menu">
+          <li><a class="dropdown-item" (click)="openNewQuestionFlyout()">Novo pitanje</a></li>
+          <li><a class="dropdown-item" (click)="openQuestionLibraryFlyout()">Pitanje iz baze</a></li>
+        </ul> -->
+      </div>
 
-    <div formArrayName="questions" class="vstack gap-3">
-
-      <div [formGroupName]="questionIndex" *ngFor="let quizQuestion of questions?.controls; let questionIndex=index"
-        class="question-wrapper">
-        <label for="first-name">Question text</label>
-        <textarea type="text" class="form-control" formControlName="text"
-          aria-label="Text input with checkbox"></textarea>
-        <button type="button" class="btn btn-outline-danger" (click)="removeQuestion(questionIndex)">Izbriši</button>
-        <app-button text="Izbroši" [onClick]="removeQuestion" [onClickParams]="[questionIndex]"></app-button>
-        <div formArrayName="answers" class="question-answers-container">
-
-          <div *ngFor="let answer of getQuestionAnswers(questionIndex).controls; let i=index" class="answer-container">
-            <div [formGroupName]="i" class="answer-form-control input-group">
-              <div class="input-group-text">
-                Is Correct
-                <input class="form-check-input mt-0" type="checkbox" formControlName="isCorrect"
-                  aria-label="Checkbox for following text input">
-              </div>
-              <input type="text" class="form-control" formControlName="text" aria-label="Text input with checkbox">
-            </div>
-          </div>
-        </div>
+      <div class="form-actions">
+        <app-button text="Submit" type="submit"></app-button>
       </div>
     </div>
 
-    <div class="form-actions">
-      <button class="btn btn-primary">Submit</button>
+    <div formArrayName="questions" class="questions">
+
+      <div [formGroupName]="questionIndex" *ngFor="let quizQuestion of questions?.controls; let questionIndex=index"
+        class="question-wrapper">
+        <app-expansion-panel [text]="getQuestionText(questionIndex)">
+          <textarea class="input" style="max-width: 100%;" formControlName="text"></textarea>
+          <div formArrayName="answers" class="answers">
+            <div *ngFor="let answer of getQuestionAnswers(questionIndex).controls; let i=index"
+              class="answer-container">
+              <div [formGroupName]="i" class="answer">
+                <app-input type="text" formControlName="text" />
+                <div>
+                  <input type="checkbox" class="checkbox" formControlName="isCorrect">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="qustion-actions">
+            <app-button style="width: 80px;display: block;" text="Izbriši" [onClick]="removeQuestion" [onClickParams]="[questionIndex]"></app-button>
+
+          </div>
+        </app-expansion-panel>
+      </div>
+
     </div>
   </form>
 

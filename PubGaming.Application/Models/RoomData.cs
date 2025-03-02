@@ -5,5 +5,6 @@
         public int Id { get; set; }
         public GameDto Game { get; set; }
         public string Name { get; set; }
+        public IList<PlayerData> PlayersData { get; set; }
     }
 }

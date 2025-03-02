@@ -1,0 +1,11 @@
+<div>
+    <div class="dropdown-button">
+        <app-button [onClick]="toggleIsHidden" class="button-text" [text]="text"></app-button>
+        <app-button [onClick]="toggleIsHidden" class="button-expand-dropdown" text="v"></app-button>
+    </div>
+    <div class="dropdown-wrapper">
+        <div class="dropdown" (click)="toggleIsHidden()" [class.hidden]="isHidden">
+            <ng-content></ng-content>
+        </div>
+    </div>
+</div>

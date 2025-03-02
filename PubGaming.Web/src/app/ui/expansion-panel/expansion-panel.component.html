@@ -1,0 +1,8 @@
+<div class="expansion-panel">
+    <div class="expansion-header" [class.expanded]="isExpanded" (click)="toggleIsExpanded()">
+       {{text}}
+    </div>
+    <div class="expansion-content" [class.expanded]="isExpanded">
+        <ng-content></ng-content>
+    </div>
+</div>

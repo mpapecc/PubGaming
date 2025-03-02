@@ -28,6 +28,9 @@ import { ButtonComponent } from './ui/button/button.component';
 import { InputComponent } from './ui/inputs/input/input.component';
 import { FormInputComponent } from './ui/inputs/form-input/form-input.component';
 import { CardComponent } from './ui/card/card.component';
+import { PlayersListComponent } from './components/players-list/players-list.component';
+import { ExpansionPanelComponent } from './ui/expansion-panel/expansion-panel.component';
+import { DropdownButtonComponent } from './ui/dropdown-button/dropdown-button.component';
 
 const routes: Routes = [
   { path: 'add-question', component: QuestionFormComponent },
@@ -66,7 +69,10 @@ const routes: Routes = [
     ButtonComponent,
     InputComponent,
     FormInputComponent,
-    CardComponent
+    CardComponent,
+    PlayersListComponent,
+    ExpansionPanelComponent,
+    DropdownButtonComponent
   ],
   imports: [
     BrowserModule,

@@ -1,7 +1,35 @@
-.quiz-form-wrapper{
+.quiz-form-wrapper {
     height: 100%;
 
-    .quiz-form{
+    .quiz-form {
         height: 100%;
+
+        .quiz-builder-elements {
+            height: 100%;
+            padding: 8px;
+            display: grid;
+            grid-template-columns: 300px auto;
+            gap: 8px;
+        }
+
+        .quiz-details {
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+            border-radius: 8px;
+            padding: 8px;
+        }
+
+        .sets {
+            height: 100%;
+            overflow-y: auto;
+            flex: 1;
+            padding: 8px;
+        }
+
+        .checkbox {
+            width: 20px;
+            height: 100%;
+            accent-color: green;
+            color: green;
+        }
     }
 }
