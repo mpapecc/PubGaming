@@ -31,6 +31,10 @@ import { CardComponent } from './ui/card/card.component';
 import { PlayersListComponent } from './components/players-list/players-list.component';
 import { ExpansionPanelComponent } from './ui/expansion-panel/expansion-panel.component';
 import { DropdownButtonComponent } from './ui/dropdown-button/dropdown-button.component';
+import { CreateRoomFormComponent } from './forms/create-room-form/create-room-form.component';
+import { HostRoomsListComponent } from './components/host-rooms-list/host-rooms-list.component';
+import { RoomComponent } from './components/room/room.component';
+import { QuizProcessorComponent } from './components/quiz-processor/quiz-processor.component';
 
 const routes: Routes = [
   { path: 'add-question', component: QuestionFormComponent },
@@ -41,8 +45,14 @@ const routes: Routes = [
   { path: 'quiz-builder/:id', component: QuizBuilderComponent },
   { path: 'quizzes-library', component: QuizzesLibraryComponent },
   { path: 'login', component: LoginFormComponent },
-  { path: 'host/:roomId', component: HostComponent },
-  { path: 'host', component: HostComponent },
+  {
+    path: 'host',
+    component: HostComponent,
+    children: [
+      { path: '', component: CreateRoomFormComponent },
+      { path: ':roomId', component: RoomComponent },
+    ]
+  },
   { path: '', component: JoinGameFormComponent }
 ];
 
@@ -72,7 +82,11 @@ const routes: Routes = [
     CardComponent,
     PlayersListComponent,
     ExpansionPanelComponent,
-    DropdownButtonComponent
+    DropdownButtonComponent,
+    CreateRoomFormComponent,
+    HostRoomsListComponent,
+    RoomComponent,
+    QuizProcessorComponent
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { GameHubService } from 'src/app/services/hubs/game-hub.service';
+import { HubService } from 'src/app/services/hubs/hub.service';
+import { RoomHubService } from 'src/app/services/hubs/room-hub.service';
 import { ToastMessageService } from 'src/app/services/toast-message.service';
 
 @Component({
@@ -13,7 +15,8 @@ export class JoinGameFormComponent {
   constructor(
     private fb: FormBuilder, 
     private toastMessageService: ToastMessageService,
-    private gameHubService:GameHubService
+    private gameHubService:GameHubService,
+    private hubService: HubService
   ) {}
   
   profileForm = this.fb.group({
@@ -26,7 +29,7 @@ export class JoinGameFormComponent {
     let playerName = this.profileForm.get("name")!.value!; 
     let roomId = this.profileForm.get("roomId")!.value!; 
 
-    this.gameHubService.connect(() => {
+    this.hubService.connect(() => {
       this.gameHubService.joinRoom(playerName.toString(), parseInt(roomId)).then(() => {
         this.gameHubService.onNotifyGroupPlayerJoinedRoom(name => console.log(`Player with name ${name} joined group`));
       });

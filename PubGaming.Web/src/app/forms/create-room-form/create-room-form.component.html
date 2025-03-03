@@ -1,0 +1,7 @@
+<div class="single-column-form create-room-form-wrapper" style="height: auto;max-width: 500px;">
+    <app-form-input [formControl]="roomName" placeholder="ID Sobe"></app-form-input>
+    <app-button text="Stvori sobu" [onClick]="reconnectIfPossibleAndCreateGameRoom"></app-button>
+</div>
+
+<app-host-rooms-list [reconnectPossibleToRooms]="roomHubService.reconnectPossibleToRooms"
+    [reconnectToRoom]="roomHubService.reconnectToRoom"></app-host-rooms-list>

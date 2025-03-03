@@ -62,12 +62,12 @@ namespace PubGaming.Api.Hub
         {
             var gameRoom = GetGameRoom(roomId);
             var playerData = new PlayerData(Context.ConnectionId, playerName);
-            gameRoom.playersConnectionIds.Add(playerData);
+            gameRoom.PlayersData.Add(playerData);
 
             Groups.AddToGroupAsync(Context.ConnectionId, gameRoom.name);
 
             Clients.GroupExcept(gameRoom.name, [gameRoom.adminConnectionId, Context.ConnectionId]).NotifyGroupPlayerJoinedRoom(playerName);
-            Clients.Client(gameRoom.adminConnectionId).NotifyAdminPlayerJoinedRoom(playerName);
+            Clients.Client(gameRoom.adminConnectionId).NotifyAdminPlayerJoinedRoom(new {playerName, Context.ConnectionId });
         }
 
         public void SelectGame(int roomId, int gameId)

@@ -1,5 +1,5 @@
-<div>
-    <span *ngFor="let player of players">
+<div style="display: flex;flex-direction: column;">
+    <span *ngFor="let player of roomHubService.playersInRoom">
         {{player.name}}
     </span>
 </div>

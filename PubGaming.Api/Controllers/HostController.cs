@@ -10,13 +10,6 @@ namespace PubGaming.Api.Controllers
     [ApiController]
     public class HostController : ControllerBase
     {
-        private readonly IHubContext<GameHub> gameHub;
-
-        public HostController(IHubContext<GameHub> gameHub)
-        {
-            this.gameHub = gameHub;
-        }
-
         [HttpGet(nameof(IsHostActive))]
         public IsHostActiveResponse IsHostActive(string hostConnectionId, int? roomId)
         {
@@ -26,7 +19,7 @@ namespace PubGaming.Api.Controllers
                 return new IsHostActiveResponse() 
                 { 
                     IsHostActive = isHostActive, 
-                    AvailableRooms = hostData?.Select(x => new RoomData { Game = x.Value.Game, Id = x.Value.id, Name = x.Value.name, PlayersData = x.Value.playersConnectionIds }) 
+                    AvailableRooms = hostData?.Select(x => new RoomData { Game = x.Value.Game, Id = x.Value.id, Name = x.Value.name, PlayersData = x.Value.PlayersData }) 
                 };
 
             if (hostData == null)
@@ -37,7 +30,7 @@ namespace PubGaming.Api.Controllers
             return new IsHostActiveResponse() 
             { 
                 IsHostActive = isRoomActive, 
-                AvailableRooms = hostData?.Select(x => new RoomData { Game = x.Value.Game, Id = x.Value.id, Name = x.Value.name, PlayersData = x.Value.playersConnectionIds }) 
+                AvailableRooms = hostData?.Select(x => new RoomData { Game = x.Value.Game, Id = x.Value.id, Name = x.Value.name, PlayersData = x.Value.PlayersData }) 
             };
         }
     }

@@ -1,0 +1,17 @@
+<div class="reconnect-possibilites-options">
+    <div *ngIf="reconnectPossibleToRooms && reconnectPossibleToRooms.length > 0"
+        class="reconnect-possibilites-title">Aktivne Sobe</div>
+    <div class="card-grid reconnect-possibilites-rooms">
+        <app-card *ngFor="let room of reconnectPossibleToRooms" (click)="reconnectToRoom(room.id)" class="app-card">
+            <div>
+                <div class="game-picture-container">
+                    <img style="width: 120px;" src="/assets/media/quiz-placeholder.jpg"
+                        class="img-fluid rounded-start" alt="/assets/media/quiz-placeholder.jpg">
+                </div>
+                <div>
+                    ime sobe : {{room.name}}
+                </div>
+            </div>
+        </app-card>
+    </div>
+</div>

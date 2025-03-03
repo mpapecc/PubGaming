@@ -1,48 +1,5 @@
-<div *ngIf="!_roomId" class="flex-center-column no-room">
-    <div class="single-column-form create-room-form-wrapper" style="height: auto;max-width: 500px;">
-        <app-form-input [formControl]="roomName" placeholder="ID Sobe"></app-form-input>
-        <app-button text="Stvori sobu" [onClick]="reconnectIfPossibleAndCreateGameRoom"></app-button>
-    </div>
-
-    <div class="reconnect-possibilites-options">
-        <div *ngIf="reconnectPossibleToRooms && reconnectPossibleToRooms.length > 0"
-            class="reconnect-possibilites-title">Aktivne Sobe</div>
-        <div class="card-grid reconnect-possibilites-rooms">
-            <app-card *ngFor="let room of reconnectPossibleToRooms" (click)="reconnectToRoom(room.id)" class="app-card">
-                <div>
-                    <!-- <div class="game-picture-container">
-                        <img style="width: 120px;" src="/assets/media/quiz-placeholder.jpg"
-                            class="img-fluid rounded-start" alt="/assets/media/quiz-placeholder.jpg">
-                    </div> -->
-                    <div>
-                        ime sobe : {{room.name}}
-                    </div>
-                </div>
-            </app-card>
-        </div>
-    </div>
-</div>
-
-<div *ngIf="_roomId" class="room-selected">
-    
-
-    <div style="display: flex;flex:1;height: 100%;">
-        <div class="players-list-container">
-            <app-players-list class="players-list" [players]=playersInRoom></app-players-list>
-        </div>
-
-        <div class="game-selection">
-            <div class="room-info">
-                Room {{name}} is created. Room Id is {{_roomId}}. Players can use this Id to connect to room.
-            </div>
-            <app-quizzes-library *ngIf="!selectedQuiz" #quizzes style="overflow-y: auto;"></app-quizzes-library>
-
-            <div *ngIf="selectedQuiz">
-                {{selectedQuiz.name}}
-                <app-button [onClick]="startGame" text="Pokreni"></app-button>
-            </div>
-        </div>
-    </div>
+<div class="host-router-outlet">
+    <router-outlet></router-outlet>
 </div>
 
 <app-loader [isVisible]="isLoading"></app-loader>

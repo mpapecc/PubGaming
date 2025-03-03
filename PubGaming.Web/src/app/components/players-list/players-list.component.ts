@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { RoomHubService } from 'src/app/services/hubs/room-hub.service';
 
 @Component({
   selector: 'app-players-list',
@@ -6,5 +7,5 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./players-list.component.css']
 })
 export class PlayersListComponent {
-  @Input() players : any[] = [];
+  constructor(public roomHubService: RoomHubService){}
 }
